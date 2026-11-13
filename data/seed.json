@@ -1,0 +1,1528 @@
+[
+{
+"t": "VCB",
+"name": "Vietcombank",
+"ex": "HOSE",
+"ref": 62500,
+"cap": 520.0
+},
+{
+"t": "VIC",
+"name": "Vingroup",
+"ex": "HOSE",
+"ref": 95000,
+"cap": 360.0
+},
+{
+"t": "VGI",
+"name": "Viettel Global",
+"ex": "UPCOM",
+"ref": 90000,
+"cap": 270.0
+},
+{
+"t": "BID",
+"name": "BIDV",
+"ex": "HOSE",
+"ref": 38200,
+"cap": 265.0
+},
+{
+"t": "ACV",
+"name": "Cảng Hàng không Việt Nam",
+"ex": "UPCOM",
+"ref": 120000,
+"cap": 260.0
+},
+{
+"t": "TCB",
+"name": "Techcombank",
+"ex": "HOSE",
+"ref": 34500,
+"cap": 245.0
+},
+{
+"t": "VHM",
+"name": "Vinhomes",
+"ex": "HOSE",
+"ref": 58000,
+"cap": 240.0
+},
+{
+"t": "CTG",
+"name": "VietinBank",
+"ex": "HOSE",
+"ref": 36100,
+"cap": 195.0
+},
+{
+"t": "FPT",
+"name": "FPT Corp",
+"ex": "HOSE",
+"ref": 118000,
+"cap": 175.0
+},
+{
+"t": "HPG",
+"name": "Hòa Phát",
+"ex": "HOSE",
+"ref": 26500,
+"cap": 170.0
+},
+{
+"t": "VPB",
+"name": "VPBank",
+"ex": "HOSE",
+"ref": 19800,
+"cap": 157.0
+},
+{
+"t": "GAS",
+"name": "PV Gas",
+"ex": "HOSE",
+"ref": 66000,
+"cap": 155.0
+},
+{
+"t": "MBB",
+"name": "MB Bank",
+"ex": "HOSE",
+"ref": 24600,
+"cap": 150.0
+},
+{
+"t": "VNM",
+"name": "Vinamilk",
+"ex": "HOSE",
+"ref": 61000,
+"cap": 127.0
+},
+{
+"t": "VPL",
+"name": "Vinpearl",
+"ex": "HOSE",
+"ref": 70000,
+"cap": 125.0
+},
+{
+"t": "GVR",
+"name": "Cao su Việt Nam",
+"ex": "HOSE",
+"ref": 30000,
+"cap": 120.0
+},
+{
+"t": "MSN",
+"name": "Masan Group",
+"ex": "HOSE",
+"ref": 78000,
+"cap": 112.0
+},
+{
+"t": "ACB",
+"name": "Ngân hàng ACB",
+"ex": "HOSE",
+"ref": 24900,
+"cap": 111.0
+},
+{
+"t": "MCH",
+"name": "Masan Consumer",
+"ex": "UPCOM",
+"ref": 150000,
+"cap": 108.0
+},
+{
+"t": "MWG",
+"name": "Thế Giới Di Động",
+"ex": "HOSE",
+"ref": 72000,
+"cap": 106.0
+},
+{
+"t": "LPB",
+"name": "LPBank",
+"ex": "HOSE",
+"ref": 32000,
+"cap": 95.0
+},
+{
+"t": "HDB",
+"name": "HDBank",
+"ex": "HOSE",
+"ref": 23500,
+"cap": 82.0
+},
+{
+"t": "STB",
+"name": "Sacombank",
+"ex": "HOSE",
+"ref": 42000,
+"cap": 79.0
+},
+{
+"t": "BSR",
+"name": "Lọc hóa dầu Bình Sơn",
+"ex": "UPCOM",
+"ref": 21500,
+"cap": 66.0
+},
+{
+"t": "HVN",
+"name": "Vietnam Airlines",
+"ex": "HOSE",
+"ref": 30000,
+"cap": 66.0
+},
+{
+"t": "SAB",
+"name": "Sabeco",
+"ex": "HOSE",
+"ref": 48500,
+"cap": 62.0
+},
+{
+"t": "BCM",
+"name": "Becamex IDC",
+"ex": "HOSE",
+"ref": 60000,
+"cap": 62.0
+},
+{
+"t": "VRE",
+"name": "Vincom Retail",
+"ex": "HOSE",
+"ref": 27000,
+"cap": 61.0
+},
+{
+"t": "VIB",
+"name": "Ngân hàng VIB",
+"ex": "HOSE",
+"ref": 19000,
+"cap": 56.0
+},
+{
+"t": "VJC",
+"name": "Vietjet Air",
+"ex": "HOSE",
+"ref": 102000,
+"cap": 55.0
+},
+{
+"t": "VEA",
+"name": "VEAM",
+"ex": "UPCOM",
+"ref": 40000,
+"cap": 53.0
+},
+{
+"t": "SHB",
+"name": "Ngân hàng SHB",
+"ex": "HOSE",
+"ref": 12800,
+"cap": 52.0
+},
+{
+"t": "SSI",
+"name": "Chứng khoán SSI",
+"ex": "HOSE",
+"ref": 25400,
+"cap": 50.0
+},
+{
+"t": "PLX",
+"name": "Petrolimex",
+"ex": "HOSE",
+"ref": 36000,
+"cap": 46.0
+},
+{
+"t": "SSB",
+"name": "SeABank",
+"ex": "HOSE",
+"ref": 17000,
+"cap": 42.0
+},
+{
+"t": "TPB",
+"name": "TPBank",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 40.0
+},
+{
+"t": "DGC",
+"name": "Hóa chất Đức Giang",
+"ex": "HOSE",
+"ref": 98000,
+"cap": 37.0
+},
+{
+"t": "BVH",
+"name": "Tập đoàn Bảo Việt",
+"ex": "HOSE",
+"ref": 50000,
+"cap": 37.0
+},
+{
+"t": "EIB",
+"name": "Eximbank",
+"ex": "HOSE",
+"ref": 19000,
+"cap": 35.0
+},
+{
+"t": "GEX",
+"name": "Gelex",
+"ex": "HOSE",
+"ref": 40000,
+"cap": 34.0
+},
+{
+"t": "KDH",
+"name": "Nhà Khang Điền",
+"ex": "HOSE",
+"ref": 33000,
+"cap": 33.0
+},
+{
+"t": "REE",
+"name": "Cơ điện lạnh REE",
+"ex": "HOSE",
+"ref": 68000,
+"cap": 32.0
+},
+{
+"t": "POW",
+"name": "PV Power",
+"ex": "HOSE",
+"ref": 13200,
+"cap": 31.0
+},
+{
+"t": "MSB",
+"name": "Ngân hàng MSB",
+"ex": "HOSE",
+"ref": 12000,
+"cap": 31.0
+},
+{
+"t": "FOX",
+"name": "FPT Telecom",
+"ex": "UPCOM",
+"ref": 80000,
+"cap": 30.0
+},
+{
+"t": "VEF",
+"name": "VEFAC",
+"ex": "UPCOM",
+"ref": 180000,
+"cap": 30.0
+},
+{
+"t": "PNJ",
+"name": "Vàng bạc Đá quý PNJ",
+"ex": "HOSE",
+"ref": 82000,
+"cap": 28.0
+},
+{
+"t": "OCB",
+"name": "Ngân hàng OCB",
+"ex": "HOSE",
+"ref": 11000,
+"cap": 27.0
+},
+{
+"t": "VCI",
+"name": "Chứng khoán Vietcap",
+"ex": "HOSE",
+"ref": 36000,
+"cap": 26.0
+},
+{
+"t": "VIX",
+"name": "Chứng khoán VIX",
+"ex": "HOSE",
+"ref": 17000,
+"cap": 25.0
+},
+{
+"t": "GMD",
+"name": "Gemadept",
+"ex": "HOSE",
+"ref": 58000,
+"cap": 24.0
+},
+{
+"t": "NVL",
+"name": "Novaland",
+"ex": "HOSE",
+"ref": 11500,
+"cap": 22.0
+},
+{
+"t": "FRT",
+"name": "FPT Retail",
+"ex": "HOSE",
+"ref": 160000,
+"cap": 22.0
+},
+{
+"t": "KBC",
+"name": "Đô thị Kinh Bắc",
+"ex": "HOSE",
+"ref": 28000,
+"cap": 21.0
+},
+{
+"t": "VND",
+"name": "Chứng khoán VNDirect",
+"ex": "HOSE",
+"ref": 14200,
+"cap": 21.0
+},
+{
+"t": "NAB",
+"name": "Nam A Bank",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 20.0
+},
+{
+"t": "PGV",
+"name": "Tổng công ty Phát điện 3",
+"ex": "UPCOM",
+"ref": 18000,
+"cap": 20.0
+},
+{
+"t": "VGC",
+"name": "Viglacera",
+"ex": "HOSE",
+"ref": 45000,
+"cap": 20.0
+},
+{
+"t": "DCM",
+"name": "Đạm Cà Mau",
+"ex": "HOSE",
+"ref": 36000,
+"cap": 19.0
+},
+{
+"t": "HCM",
+"name": "Chứng khoán HSC",
+"ex": "HOSE",
+"ref": 26000,
+"cap": 19.0
+},
+{
+"t": "MSR",
+"name": "Masan High-Tech Materials",
+"ex": "UPCOM",
+"ref": 17000,
+"cap": 18.0
+},
+{
+"t": "PDR",
+"name": "Phát triển BĐS Phát Đạt",
+"ex": "HOSE",
+"ref": 19000,
+"cap": 17.0
+},
+{
+"t": "QNS",
+"name": "Đường Quảng Ngãi",
+"ex": "UPCOM",
+"ref": 48000,
+"cap": 17.0
+},
+{
+"t": "KDC",
+"name": "Tập đoàn Kido",
+"ex": "HOSE",
+"ref": 55000,
+"cap": 16.0
+},
+{
+"t": "PVS",
+"name": "DV Kỹ thuật Dầu khí PTSC",
+"ex": "HNX",
+"ref": 33000,
+"cap": 16.0
+},
+{
+"t": "MBS",
+"name": "Chứng khoán MB",
+"ex": "HNX",
+"ref": 28000,
+"cap": 16.0
+},
+{
+"t": "HAG",
+"name": "Hoàng Anh Gia Lai",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 16.0
+},
+{
+"t": "HUT",
+"name": "Tasco",
+"ex": "HNX",
+"ref": 17000,
+"cap": 15.0
+},
+{
+"t": "NLG",
+"name": "Đầu tư Nam Long",
+"ex": "HOSE",
+"ref": 38000,
+"cap": 15.0
+},
+{
+"t": "IDC",
+"name": "IDICO",
+"ex": "HNX",
+"ref": 47000,
+"cap": 15.0
+},
+{
+"t": "SNZ",
+"name": "Sonadezi",
+"ex": "UPCOM",
+"ref": 40000,
+"cap": 15.0
+},
+{
+"t": "DPM",
+"name": "Đạm Phú Mỹ",
+"ex": "HOSE",
+"ref": 36000,
+"cap": 14.0
+},
+{
+"t": "DXG",
+"name": "Tập đoàn Đất Xanh",
+"ex": "HOSE",
+"ref": 16500,
+"cap": 14.0
+},
+{
+"t": "VTP",
+"name": "Viettel Post",
+"ex": "HOSE",
+"ref": 120000,
+"cap": 14.0
+},
+{
+"t": "DHG",
+"name": "Dược Hậu Giang",
+"ex": "HOSE",
+"ref": 105000,
+"cap": 14.0
+},
+{
+"t": "SIP",
+"name": "Đầu tư Sài Gòn VRG",
+"ex": "HOSE",
+"ref": 70000,
+"cap": 14.0
+},
+{
+"t": "VNZ",
+"name": "VNG",
+"ex": "UPCOM",
+"ref": 450000,
+"cap": 13.0
+},
+{
+"t": "THD",
+"name": "Thaiholdings",
+"ex": "HNX",
+"ref": 35000,
+"cap": 13.0
+},
+{
+"t": "CTR",
+"name": "Công trình Viettel",
+"ex": "HOSE",
+"ref": 110000,
+"cap": 12.0
+},
+{
+"t": "PVD",
+"name": "Khoan Dầu khí PV Drilling",
+"ex": "HOSE",
+"ref": 21000,
+"cap": 12.0
+},
+{
+"t": "VCG",
+"name": "Vinaconex",
+"ex": "HOSE",
+"ref": 20000,
+"cap": 12.0
+},
+{
+"t": "PVI",
+"name": "Bảo hiểm PVI",
+"ex": "HNX",
+"ref": 50000,
+"cap": 12.0
+},
+{
+"t": "FTS",
+"name": "Chứng khoán FPT",
+"ex": "HOSE",
+"ref": 40000,
+"cap": 12.0
+},
+{
+"t": "OIL",
+"name": "PV Oil",
+"ex": "UPCOM",
+"ref": 12000,
+"cap": 12.0
+},
+{
+"t": "MML",
+"name": "Masan MEATLife",
+"ex": "UPCOM",
+"ref": 35000,
+"cap": 12.0
+},
+{
+"t": "KSV",
+"name": "Khoáng sản TKV",
+"ex": "HNX",
+"ref": 60000,
+"cap": 12.0
+},
+{
+"t": "TCH",
+"name": "Tài chính Hoàng Huy",
+"ex": "HOSE",
+"ref": 18000,
+"cap": 12.0
+},
+{
+"t": "DIG",
+"name": "DIC Corp",
+"ex": "HOSE",
+"ref": 18000,
+"cap": 11.0
+},
+{
+"t": "VHC",
+"name": "Vĩnh Hoàn",
+"ex": "HOSE",
+"ref": 60000,
+"cap": 11.0
+},
+{
+"t": "SBT",
+"name": "TTC AgriS",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 11.0
+},
+{
+"t": "SHS",
+"name": "Chứng khoán SHS",
+"ex": "HNX",
+"ref": 13500,
+"cap": 11.0
+},
+{
+"t": "VSH",
+"name": "Thủy điện Vĩnh Sơn Sông Hinh",
+"ex": "HOSE",
+"ref": 50000,
+"cap": 11.0
+},
+{
+"t": "HSG",
+"name": "Tập đoàn Hoa Sen",
+"ex": "HOSE",
+"ref": 17200,
+"cap": 10.0
+},
+{
+"t": "VCS",
+"name": "Vicostone",
+"ex": "HNX",
+"ref": 60000,
+"cap": 10.0
+},
+{
+"t": "BSI",
+"name": "Chứng khoán BIDV",
+"ex": "HOSE",
+"ref": 45000,
+"cap": 10.0
+},
+{
+"t": "BWE",
+"name": "Nước Môi trường Bình Dương",
+"ex": "HOSE",
+"ref": 45000,
+"cap": 10.0
+},
+{
+"t": "BAB",
+"name": "Ngân hàng Bắc Á",
+"ex": "HNX",
+"ref": 11000,
+"cap": 10.0
+},
+{
+"t": "ABB",
+"name": "Ngân hàng ABBank",
+"ex": "UPCOM",
+"ref": 9000,
+"cap": 9.0
+},
+{
+"t": "BMP",
+"name": "Nhựa Bình Minh",
+"ex": "HOSE",
+"ref": 110000,
+"cap": 9.0
+},
+{
+"t": "BAF",
+"name": "Nông nghiệp BAF",
+"ex": "HOSE",
+"ref": 30000,
+"cap": 9.0
+},
+{
+"t": "DBC",
+"name": "Dabaco",
+"ex": "HOSE",
+"ref": 26000,
+"cap": 9.0
+},
+{
+"t": "HDG",
+"name": "Tập đoàn Hà Đô",
+"ex": "HOSE",
+"ref": 28000,
+"cap": 9.0
+},
+{
+"t": "CEO",
+"name": "Tập đoàn C.E.O",
+"ex": "HNX",
+"ref": 16000,
+"cap": 8.0
+},
+{
+"t": "CTD",
+"name": "Coteccons",
+"ex": "HOSE",
+"ref": 80000,
+"cap": 8.0
+},
+{
+"t": "PC1",
+"name": "Tập đoàn PC1",
+"ex": "HOSE",
+"ref": 22000,
+"cap": 8.0
+},
+{
+"t": "DGW",
+"name": "Digiworld",
+"ex": "HOSE",
+"ref": 38000,
+"cap": 8.0
+},
+{
+"t": "EVF",
+"name": "EVNFinance",
+"ex": "HOSE",
+"ref": 11000,
+"cap": 8.0
+},
+{
+"t": "CMG",
+"name": "Tập đoàn CMC",
+"ex": "HOSE",
+"ref": 40000,
+"cap": 8.0
+},
+{
+"t": "VBB",
+"name": "Vietbank",
+"ex": "UPCOM",
+"ref": 12000,
+"cap": 7.0
+},
+{
+"t": "NVB",
+"name": "Ngân hàng Quốc Dân",
+"ex": "HNX",
+"ref": 10000,
+"cap": 7.0
+},
+{
+"t": "HAH",
+"name": "Vận tải Hải An",
+"ex": "HOSE",
+"ref": 55000,
+"cap": 7.0
+},
+{
+"t": "PHR",
+"name": "Cao su Phước Hòa",
+"ex": "HOSE",
+"ref": 55000,
+"cap": 7.0
+},
+{
+"t": "ANV",
+"name": "Nam Việt",
+"ex": "HOSE",
+"ref": 25000,
+"cap": 7.0
+},
+{
+"t": "SCS",
+"name": "Dịch vụ Hàng hóa Sài Gòn",
+"ex": "HOSE",
+"ref": 70000,
+"cap": 7.0
+},
+{
+"t": "CII",
+"name": "Hạ tầng Kỹ thuật TP.HCM",
+"ex": "HOSE",
+"ref": 17000,
+"cap": 7.0
+},
+{
+"t": "IMP",
+"name": "Imexpharm",
+"ex": "HOSE",
+"ref": 50000,
+"cap": 7.0
+},
+{
+"t": "NTP",
+"name": "Nhựa Tiền Phong",
+"ex": "HNX",
+"ref": 60000,
+"cap": 7.0
+},
+{
+"t": "HND",
+"name": "Nhiệt điện Hải Phòng",
+"ex": "UPCOM",
+"ref": 14000,
+"cap": 7.0
+},
+{
+"t": "DTK",
+"name": "Điện lực TKV",
+"ex": "HNX",
+"ref": 12000,
+"cap": 7.0
+},
+{
+"t": "MPC",
+"name": "Thủy sản Minh Phú",
+"ex": "UPCOM",
+"ref": 17000,
+"cap": 7.0
+},
+{
+"t": "PVT",
+"name": "Vận tải Dầu khí PVTrans",
+"ex": "HOSE",
+"ref": 17000,
+"cap": 6.0
+},
+{
+"t": "HHV",
+"name": "Đầu tư Hạ tầng Đèo Cả",
+"ex": "HOSE",
+"ref": 12500,
+"cap": 6.0
+},
+{
+"t": "NT2",
+"name": "Điện lực Nhơn Trạch 2",
+"ex": "HOSE",
+"ref": 20000,
+"cap": 6.0
+},
+{
+"t": "SZC",
+"name": "Sonadezi Châu Đức",
+"ex": "HOSE",
+"ref": 36000,
+"cap": 6.0
+},
+{
+"t": "PAN",
+"name": "Tập đoàn PAN",
+"ex": "HOSE",
+"ref": 28000,
+"cap": 6.0
+},
+{
+"t": "SJS",
+"name": "SJ Group",
+"ex": "HOSE",
+"ref": 60000,
+"cap": 6.0
+},
+{
+"t": "VGT",
+"name": "Vinatex",
+"ex": "UPCOM",
+"ref": 12000,
+"cap": 6.0
+},
+{
+"t": "QTP",
+"name": "Nhiệt điện Quảng Ninh",
+"ex": "UPCOM",
+"ref": 14000,
+"cap": 6.0
+},
+{
+"t": "VSC",
+"name": "Container Việt Nam",
+"ex": "HOSE",
+"ref": 18000,
+"cap": 5.0
+},
+{
+"t": "HT1",
+"name": "Xi măng Vicem Hà Tiên",
+"ex": "HOSE",
+"ref": 13000,
+"cap": 5.0
+},
+{
+"t": "CTS",
+"name": "Chứng khoán Vietinbank",
+"ex": "HOSE",
+"ref": 35000,
+"cap": 5.0
+},
+{
+"t": "GEG",
+"name": "Điện Gia Lai",
+"ex": "HOSE",
+"ref": 13000,
+"cap": 5.0
+},
+{
+"t": "TDM",
+"name": "Nước Thủ Dầu Một",
+"ex": "HOSE",
+"ref": 45000,
+"cap": 5.0
+},
+{
+"t": "HDC",
+"name": "Phát triển nhà Bà Rịa-Vũng Tàu",
+"ex": "HOSE",
+"ref": 28000,
+"cap": 5.0
+},
+{
+"t": "IJC",
+"name": "Becamex IJC",
+"ex": "HOSE",
+"ref": 13000,
+"cap": 5.0
+},
+{
+"t": "ITA",
+"name": "Đầu tư Công nghiệp Tân Tạo",
+"ex": "HOSE",
+"ref": 5000,
+"cap": 5.0
+},
+{
+"t": "DBD",
+"name": "Bidiphar",
+"ex": "HOSE",
+"ref": 55000,
+"cap": 5.0
+},
+{
+"t": "DVN",
+"name": "Vinapharm",
+"ex": "UPCOM",
+"ref": 20000,
+"cap": 5.0
+},
+{
+"t": "KLB",
+"name": "Kienlongbank",
+"ex": "UPCOM",
+"ref": 13000,
+"cap": 5.0
+},
+{
+"t": "VAB",
+"name": "VietABank",
+"ex": "UPCOM",
+"ref": 10000,
+"cap": 5.0
+},
+{
+"t": "BVB",
+"name": "BVBank",
+"ex": "UPCOM",
+"ref": 11000,
+"cap": 5.0
+},
+{
+"t": "HNG",
+"name": "Nông nghiệp Quốc tế HAGL",
+"ex": "UPCOM",
+"ref": 5000,
+"cap": 5.0
+},
+{
+"t": "SCG",
+"name": "Xây dựng SCG",
+"ex": "HNX",
+"ref": 65000,
+"cap": 5.5
+},
+{
+"t": "HHS",
+"name": "Đầu tư DV Hoàng Huy",
+"ex": "HOSE",
+"ref": 12000,
+"cap": 4.0
+},
+{
+"t": "ORS",
+"name": "Chứng khoán Tiên Phong",
+"ex": "HOSE",
+"ref": 14000,
+"cap": 4.0
+},
+{
+"t": "AGR",
+"name": "Chứng khoán Agribank",
+"ex": "HOSE",
+"ref": 17000,
+"cap": 4.0
+},
+{
+"t": "NKG",
+"name": "Thép Nam Kim",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 4.0
+},
+{
+"t": "DXS",
+"name": "Dịch vụ BĐS Đất Xanh",
+"ex": "HOSE",
+"ref": 7000,
+"cap": 4.0
+},
+{
+"t": "PTB",
+"name": "Phú Tài",
+"ex": "HOSE",
+"ref": 60000,
+"cap": 4.0
+},
+{
+"t": "CSV",
+"name": "Hóa chất Cơ bản miền Nam",
+"ex": "HOSE",
+"ref": 35000,
+"cap": 4.0
+},
+{
+"t": "TLG",
+"name": "Tập đoàn Thiên Long",
+"ex": "HOSE",
+"ref": 55000,
+"cap": 4.0
+},
+{
+"t": "NTC",
+"name": "KCN Nam Tân Uyên",
+"ex": "UPCOM",
+"ref": 180000,
+"cap": 4.0
+},
+{
+"t": "SGB",
+"name": "Saigonbank",
+"ex": "UPCOM",
+"ref": 12000,
+"cap": 4.0
+},
+{
+"t": "DPR",
+"name": "Cao su Đồng Phú",
+"ex": "HOSE",
+"ref": 40000,
+"cap": 3.5
+},
+{
+"t": "PPC",
+"name": "Nhiệt điện Phả Lại",
+"ex": "HOSE",
+"ref": 11000,
+"cap": 3.5
+},
+{
+"t": "AAA",
+"name": "Nhựa An Phát Xanh",
+"ex": "HOSE",
+"ref": 9000,
+"cap": 3.5
+},
+{
+"t": "TRA",
+"name": "Traphaco",
+"ex": "HOSE",
+"ref": 80000,
+"cap": 3.3
+},
+{
+"t": "TCM",
+"name": "Dệt may Thành Công",
+"ex": "HOSE",
+"ref": 30000,
+"cap": 3.0
+},
+{
+"t": "MSH",
+"name": "May Sông Hồng",
+"ex": "HOSE",
+"ref": 45000,
+"cap": 3.0
+},
+{
+"t": "ASM",
+"name": "Tập đoàn Sao Mai",
+"ex": "HOSE",
+"ref": 8000,
+"cap": 3.0
+},
+{
+"t": "DRC",
+"name": "Cao su Đà Nẵng",
+"ex": "HOSE",
+"ref": 24000,
+"cap": 3.0
+},
+{
+"t": "DHC",
+"name": "Đông Hải Bến Tre",
+"ex": "HOSE",
+"ref": 38000,
+"cap": 3.0
+},
+{
+"t": "QCG",
+"name": "Quốc Cường Gia Lai",
+"ex": "HOSE",
+"ref": 11000,
+"cap": 3.0
+},
+{
+"t": "MIG",
+"name": "Bảo hiểm Quân đội",
+"ex": "HOSE",
+"ref": 17000,
+"cap": 3.0
+},
+{
+"t": "FMC",
+"name": "Thực phẩm Sao Ta",
+"ex": "HOSE",
+"ref": 45000,
+"cap": 3.0
+},
+{
+"t": "DPG",
+"name": "Tập đoàn Đạt Phương",
+"ex": "HOSE",
+"ref": 45000,
+"cap": 3.0
+},
+{
+"t": "VDS",
+"name": "Chứng khoán Rồng Việt",
+"ex": "HOSE",
+"ref": 12000,
+"cap": 2.5
+},
+{
+"t": "TNG",
+"name": "Đầu tư Thương mại TNG",
+"ex": "HNX",
+"ref": 20000,
+"cap": 2.5
+},
+{
+"t": "BMI",
+"name": "Bảo hiểm Bảo Minh",
+"ex": "HOSE",
+"ref": 22000,
+"cap": 2.5
+},
+{
+"t": "HBC",
+"name": "Xây dựng Hòa Bình",
+"ex": "UPCOM",
+"ref": 7000,
+"cap": 2.5
+},
+{
+"t": "BFC",
+"name": "Phân bón Bình Điền",
+"ex": "HOSE",
+"ref": 40000,
+"cap": 2.3
+},
+{
+"t": "STK",
+"name": "Sợi Thế Kỷ",
+"ex": "HOSE",
+"ref": 25000,
+"cap": 2.0
+},
+{
+"t": "IDI",
+"name": "Đầu tư Đa Quốc Gia I.D.I",
+"ex": "HOSE",
+"ref": 8000,
+"cap": 2.0
+},
+{
+"t": "ELC",
+"name": "Elcom",
+"ex": "HOSE",
+"ref": 20000,
+"cap": 2.0
+},
+{
+"t": "HQC",
+"name": "Địa ốc Hoàng Quân",
+"ex": "HOSE",
+"ref": 3500,
+"cap": 2.0
+},
+{
+"t": "LCG",
+"name": "Lizen",
+"ex": "HOSE",
+"ref": 10000,
+"cap": 2.0
+},
+{
+"t": "FCN",
+"name": "Fecon",
+"ex": "HOSE",
+"ref": 14000,
+"cap": 2.0
+},
+{
+"t": "CRE",
+"name": "BĐS Thế Kỷ",
+"ex": "HOSE",
+"ref": 8000,
+"cap": 2.0
+},
+{
+"t": "HPX",
+"name": "Đầu tư Hải Phát",
+"ex": "HOSE",
+"ref": 6000,
+"cap": 2.0
+},
+{
+"t": "KHG",
+"name": "Khải Hoàn Land",
+"ex": "HOSE",
+"ref": 5000,
+"cap": 2.0
+},
+{
+"t": "APH",
+"name": "An Phát Holdings",
+"ex": "HOSE",
+"ref": 8000,
+"cap": 2.0
+},
+{
+"t": "YEG",
+"name": "Tập đoàn Yeah1",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 2.0
+},
+{
+"t": "BVS",
+"name": "Chứng khoán Bảo Việt",
+"ex": "HNX",
+"ref": 30000,
+"cap": 2.0
+},
+{
+"t": "LAS",
+"name": "Supe Phốt phát Lâm Thao",
+"ex": "HNX",
+"ref": 18000,
+"cap": 2.0
+},
+{
+"t": "PLC",
+"name": "Hóa dầu Petrolimex",
+"ex": "HNX",
+"ref": 25000,
+"cap": 2.0
+},
+{
+"t": "VOS",
+"name": "Vận tải biển Việt Nam",
+"ex": "HOSE",
+"ref": 13000,
+"cap": 1.8
+},
+{
+"t": "SCR",
+"name": "Địa ốc Sài Gòn Thương Tín",
+"ex": "HOSE",
+"ref": 7000,
+"cap": 1.7
+},
+{
+"t": "VGS",
+"name": "Ống thép Việt Đức",
+"ex": "HNX",
+"ref": 30000,
+"cap": 1.6
+},
+{
+"t": "NTL",
+"name": "Đô thị Từ Liêm",
+"ex": "HOSE",
+"ref": 20000,
+"cap": 1.5
+},
+{
+"t": "LHG",
+"name": "KCN Long Hậu",
+"ex": "HOSE",
+"ref": 30000,
+"cap": 1.5
+},
+{
+"t": "HAX",
+"name": "Ô tô Hàng Xanh",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 1.5
+},
+{
+"t": "TNH",
+"name": "Bệnh viện Quốc tế Thái Nguyên",
+"ex": "HOSE",
+"ref": 15000,
+"cap": 1.5
+},
+{
+"t": "TIG",
+"name": "Tập đoàn Thăng Long",
+"ex": "HNX",
+"ref": 9000,
+"cap": 1.5
+},
+{
+"t": "DTD",
+"name": "Đầu tư Phát triển Thành Đạt",
+"ex": "HNX",
+"ref": 25000,
+"cap": 1.5
+},
+{
+"t": "LIX",
+"name": "Bột giặt LIX",
+"ex": "HOSE",
+"ref": 40000,
+"cap": 1.3
+},
+{
+"t": "PVP",
+"name": "Vận tải Dầu khí Thái Bình Dương",
+"ex": "HOSE",
+"ref": 14000,
+"cap": 1.3
+},
+{
+"t": "EVS",
+"name": "Chứng khoán Everest",
+"ex": "HNX",
+"ref": 7000,
+"cap": 1.3
+},
+{
+"t": "NAF",
+"name": "Nafoods",
+"ex": "HOSE",
+"ref": 20000,
+"cap": 1.2
+},
+{
+"t": "GIL",
+"name": "Gilimex",
+"ex": "HOSE",
+"ref": 17000,
+"cap": 1.2
+},
+{
+"t": "TDC",
+"name": "Becamex TDC",
+"ex": "HOSE",
+"ref": 12000,
+"cap": 1.2
+},
+{
+"t": "EVG",
+"name": "Tập đoàn Everland",
+"ex": "HOSE",
+"ref": 5000,
+"cap": 1.0
+},
+{
+"t": "TV2",
+"name": "Tư vấn Xây dựng Điện 2",
+"ex": "HOSE",
+"ref": 35000,
+"cap": 1.0
+},
+{
+"t": "DDV",
+"name": "DAP Vinachem",
+"ex": "UPCOM",
+"ref": 25000,
+"cap": 1.0
+},
+{
+"t": "C4G",
+"name": "Tập đoàn Cienco4",
+"ex": "UPCOM",
+"ref": 8000,
+"cap": 1.0
+},
+{
+"t": "L14",
+"name": "Licogi 14",
+"ex": "HNX",
+"ref": 30000,
+"cap": 1.0
+},
+{
+"t": "LTG",
+"name": "Lộc Trời",
+"ex": "UPCOM",
+"ref": 12000,
+"cap": 1.0
+},
+{
+"t": "PVC",
+"name": "Hóa chất Dầu khí PVChem",
+"ex": "HNX",
+"ref": 11000,
+"cap": 1.0
+},
+{
+"t": "D2D",
+"name": "Đô thị Công nghiệp số 2",
+"ex": "HOSE",
+"ref": 28000,
+"cap": 0.9
+},
+{
+"t": "DRI",
+"name": "Cao su Đắk Lắk",
+"ex": "UPCOM",
+"ref": 12000,
+"cap": 0.9
+},
+{
+"t": "APS",
+"name": "Chứng khoán APEC",
+"ex": "HNX",
+"ref": 6000,
+"cap": 0.8
+},
+{
+"t": "SMC",
+"name": "Đầu tư Thương mại SMC",
+"ex": "HOSE",
+"ref": 9000,
+"cap": 0.7
+},
+{
+"t": "S99",
+"name": "Sông Đà 9.09",
+"ex": "HNX",
+"ref": 7000,
+"cap": 0.7
+},
+{
+"t": "DP3",
+"name": "Dược phẩm Trung ương 3",
+"ex": "HNX",
+"ref": 60000,
+"cap": 0.6
+},
+{
+"t": "HLD",
+"name": "BĐS HUDLAND",
+"ex": "HNX",
+"ref": 25000,
+"cap": 0.6
+},
+{
+"t": "CAP",
+"name": "Lâm nông sản Yên Bái",
+"ex": "HNX",
+"ref": 50000,
+"cap": 0.5
+},
+{
+"t": "NRC",
+"name": "Tập đoàn NRC",
+"ex": "HNX",
+"ref": 5000,
+"cap": 0.5
+},
+{
+"t": "HGM",
+"name": "Cơ khí Khoáng sản Hà Giang",
+"ex": "HNX",
+"ref": 40000,
+"cap": 0.5
+},
+{
+"t": "C69",
+"name": "Xây dựng 1369",
+"ex": "HNX",
+"ref": 7000,
+"cap": 0.4
+}
+]

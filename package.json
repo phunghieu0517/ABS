@@ -1,0 +1,13 @@
+{
+  "name": "ca-phe-abs",
+  "version": "1.0.0",
+  "description": "Cà phê ABS — quán cà phê chứng khoán isometric, nhiều người chơi, giá cập nhật mỗi phút",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:abs": "PRICE_SOURCE=abs node server.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED",
+  "private": true
+}

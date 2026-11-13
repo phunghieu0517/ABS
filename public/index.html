@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cà phê ABS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0713; --panel:#140d21; --panel2:#1c1330; --line:#2c1f47; --text:#f3e8ff; --muted:#a993c9;
+  --up:#22c55e; --down:#ef4444; --ref:#facc15; --ceil:#e879f9; --floor:#22d3ee; --accent:#a855f7; --pink:#f0abfc;
+  --f:'Be Vietnam Pro',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:var(--f)}
+button{font-family:var(--f)}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 16px;background:linear-gradient(180deg,#1a0f2e,#0f0919);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.brand .logo{width:36px;height:36px;border-radius:11px;background:radial-gradient(circle at 35% 30%,#e9d5ff,#7c3aed 60%,#3b0764);display:grid;place-items:center;font-size:19px;box-shadow:0 0 18px #a855f766}
+.brand small{display:block;font-weight:500;font-size:11.5px;color:var(--muted)}
+.search{position:relative;flex:1 1 280px;max-width:460px}
+.search input{width:100%;padding:10px 12px 10px 38px;border-radius:12px;border:1px solid #4c2f7a;background:#0d0817;color:var(--text);font:inherit;font-size:14px;outline:none;box-shadow:0 0 0 0 #a855f700;transition:.2s}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #a855f733}
+.search .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px}
+.drop{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px;display:none;z-index:30;box-shadow:0 14px 40px #000c}
+.drop.show{display:block}
+.res{display:flex;align-items:center;gap:10px;padding:7px 9px;border-radius:9px;cursor:pointer;user-select:none;font-size:13.5px}
+.res:hover,.res.active{background:var(--panel2)}
+.res b{width:46px}
+.res .nm{flex:1;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res .px{font-variant-numeric:tabular-nums;font-weight:700;text-align:right;min-width:92px}
+.mug{width:18px;height:16px;flex:none;position:relative}
+.mug::before{content:"";position:absolute;left:0;bottom:0;width:13px;height:13px;border-radius:2px 2px 5px 5px;background:#f5f0ff;box-shadow:inset 0 3px 0 var(--c)}
+.mug::after{content:"";position:absolute;right:0;top:5px;width:5px;height:6px;border:2px solid #f5f0ff;border-left:none;border-radius:0 5px 5px 0}
+.drop .tip{font-size:11.5px;color:var(--muted);padding:7px 9px 3px;border-top:1px solid var(--line);margin-top:4px;line-height:1.5}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend i{width:11px;height:11px;border-radius:50%}
+.status{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;font-size:12px}
+.pill{padding:5px 10px;border-radius:999px;background:#0d0817;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.warn{color:#fcd34d;border-color:#5b4614}
+.pill.ok{color:#86efac;border-color:#1f4d2e}
+main{display:flex;height:calc(100vh - 60px);min-height:520px}
+.stage{position:relative;flex:1;min-width:0;background:radial-gradient(ellipse at 50% 40%,#1d1233 0%,#0b0713 70%)}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+.bar{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;gap:6px;padding:6px;border-radius:16px;background:#120a1fe6;border:1px solid #3b2563;box-shadow:0 8px 30px #000b;flex-wrap:wrap;justify-content:center;max-width:calc(100% - 20px)}
+.bar button{border:1px solid transparent;background:#1f1436;color:var(--text);border-radius:11px;padding:7px 10px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.bar button:hover{background:#2a1b4a}
+.bar button.on{border-color:var(--accent);background:#3b1f6b;box-shadow:0 0 12px #a855f766}
+.bar .sep{width:1px;background:#3b2563;margin:2px 2px}
+.toast{position:absolute;left:50%;top:14px;transform:translateX(-50%) translateY(-10px);background:#1a0f2ef2;border:1px solid #4c2f7a;padding:9px 16px;border-radius:999px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;box-shadow:0 0 20px #a855f744}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.side{width:300px;flex:none;border-left:1px solid var(--line);background:var(--panel);overflow:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}
+.card h3{margin:0 0 8px;font-size:12.5px;font-weight:800;color:#c4b5fd;text-transform:uppercase;letter-spacing:.7px}
+.order-card{background:linear-gradient(160deg,#2b1652,#1c1330);border-color:#5b3a99}
+.order-card p{margin:0 0 10px;font-size:13px;color:var(--muted);line-height:1.5}
+.btn{font:600 13px var(--f);padding:9px 13px;border-radius:11px;border:1px solid #4c2f7a;background:#251842;color:var(--text);cursor:pointer}
+.btn.primary{background:linear-gradient(135deg,#a855f7,#7c3aed);border-color:#a855f7;color:#fff;box-shadow:0 0 14px #a855f755}
+.btn:active{transform:translateY(1px)}
+.me-row{display:flex;align-items:center;gap:10px;font-size:14px}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.carry{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.6}
+.people{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px;max-height:200px;overflow:auto}
+.people li{display:flex;align-items:center;gap:8px}
+.people li .sub{margin-left:auto;color:var(--muted);font-size:11.5px;white-space:nowrap}
+.help{font-size:12.5px;color:var(--muted);line-height:1.7}
+kbd{background:#0007;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;font:600 11px var(--f);color:var(--text)}
+.note{font-size:11.5px;color:var(--muted);line-height:1.55}
+.modal{position:fixed;inset:0;background:#05020bb3;display:none;align-items:center;justify-content:center;z-index:50;backdrop-filter:blur(4px);padding:16px}
+.modal.show{display:flex}
+.box{background:var(--panel);border:1px solid #3b2563;border-radius:20px;padding:22px;width:min(390px,100%);box-shadow:0 20px 60px #000d,0 0 40px #7c3aed33}
+.box h2{margin:0 0 4px;font-size:20px}
+.box p{margin:0 0 14px;color:var(--muted);font-size:13.5px;line-height:1.55}
+.box input{width:100%;padding:11px 12px;border-radius:11px;border:1px solid var(--line);background:#0d0817;color:var(--text);font:inherit;font-size:15px;outline:none;margin-bottom:12px}
+.box input:focus{border-color:var(--accent)}
+.swatches{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.swatches button{width:30px;height:30px;border-radius:50%;border:3px solid transparent;cursor:pointer}
+.swatches button.sel{border-color:#fff;box-shadow:0 0 10px #fff8}
+.info .top{display:flex;align-items:center;gap:10px}
+.info .tk{font-size:26px;font-weight:800}
+.info .ex{font-size:11.5px;padding:3px 8px;border-radius:6px;background:#0006;color:var(--muted)}
+.info .x{margin-left:auto;background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer}
+.info .nm{color:var(--muted);font-size:13.5px;margin:2px 0 12px}
+.info .big{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;margin-bottom:14px}
+.info .big small{font-size:15px;font-weight:600;margin-left:8px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.grid3 div{border-radius:12px;padding:10px;text-align:center;background:#0005;border:1px solid}
+.grid3 label{display:block;font-size:12px;margin-bottom:4px;font-weight:700}
+.grid3 b{font-size:19px;font-variant-numeric:tabular-nums}
+.info .meta{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+@media (max-width:900px){
+  main{flex-direction:column;height:auto}
+  .stage{height:68vh;min-height:380px}
+  .side{width:auto;border-left:none;border-top:1px solid var(--line)}
+  .status{margin-left:0}
+  .bar button span.t{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">☕</div><div>Cà phê ABS<small>Order một mã, nhận một ly · ly càng to, vốn hóa càng lớn</small></div></div>
+  <div class="search">
+    <span class="ico">☕</span>
+    <input id="q" placeholder="Order mã cổ phiếu: VCB, HPG, FPT…" autocomplete="off" spellcheck="false">
+    <div class="drop" id="drop"></div>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--ceil)"></i>Trần</span>
+    <span><i style="background:var(--up)"></i>Tăng</span>
+    <span><i style="background:var(--ref)"></i>TC</span>
+    <span><i style="background:var(--down)"></i>Giảm</span>
+    <span><i style="background:var(--floor)"></i>Sàn</span>
+  </div>
+  <div class="status">
+    <span class="pill warn" id="dataPill" title="Trang chưa kết nối được nguồn giá thật">⚠ Dữ liệu mô phỏng</span>
+    <span class="pill" id="roomPill">Đang mở phòng…</span>
+    <span class="pill" id="guestPill">Khách: 0/30</span>
+    <span class="pill" id="seatPill">Ghế: 0/30</span>
+  </div>
+</header>
+<main>
+  <div class="stage" id="stage">
+    <canvas id="cv"></canvas>
+    <div class="toast" id="toast"></div>
+    <div class="bar" id="bar">
+      <button data-e="none" class="on" title="Bình thường (1)">😐<span class="t">Bình thường</span></button>
+      <button data-e="dance" title="Nhảy múa (2)">💃<span class="t">Nhảy múa</span></button>
+      <button data-e="sad" title="Buồn (3)">😢<span class="t">Buồn</span></button>
+      <button data-e="happy" title="Vui (4)">😄<span class="t">Vui</span></button>
+      <button data-e="wave" title="Vẫy tay (5)">👋<span class="t">Vẫy tay</span></button>
+      <button data-e="angry" title="Giận (6)">😠<span class="t">Giận</span></button>
+      <span class="sep"></span>
+      <button id="btnSit" title="Ngồi / Đứng (F)">🪑<span class="t">Ngồi/Đứng</span></button>
+      <button id="btnCounter" title="Ra quầy order">🧾<span class="t">Ra quầy</span></button>
+    </div>
+  </div>
+  <aside class="side">
+    <div class="card order-card">
+      <h3>☕ Quầy order</h3>
+      <p id="orderText">Gõ mã vào ô <b>Order</b> phía trên. Bạn sẽ ra quầy, nhân viên pha xong thì ly mới xuất hiện để bạn bưng đi.</p>
+      <button class="btn primary" id="btnOrderFocus" style="width:100%">Order một mã</button>
+    </div>
+    <div class="card">
+      <h3>Bạn</h3>
+      <div class="me-row"><span class="dot" id="meDot"></span><b id="meName">—</b><span style="margin-left:auto;color:var(--muted);font-size:12px" id="meSeat"></span></div>
+      <div class="carry" id="meCarry">Tay đang trống.</div>
+    </div>
+    <div class="card">
+      <h3 id="peopleTitle">Trong phòng</h3>
+      <ul class="people" id="people"></ul>
+    </div>
+    <div class="card help">
+      <h3>Cách chơi</h3>
+      Order mã ở ô phía trên (<kbd>/</kbd> để gõ nhanh).<br>
+      <kbd>W A S D</kbd> / mũi tên hoặc bấm xuống sàn để đi.<br>
+      Bấm vào ghế để tới ngồi · <kbd>F</kbd> ngồi/đứng.<br>
+      Biểu cảm: <kbd>1</kbd>–<kbd>6</kbd> hoặc thanh dưới màn hình.<br>
+      <b style="color:var(--text)">Ấn liên tiếp 3 lần</b> vào ly hoặc mã để xem <b style="color:var(--ref)">TC</b>, <b style="color:var(--ceil)">Trần</b>, <b style="color:var(--floor)">Sàn</b>.
+    </div>
+    <div class="note" id="dataNote">Đang dùng khoảng 200 mã phổ biến với <b>giá mô phỏng</b> (tự dao động trong biên độ Trần–Sàn), chưa lấy từ bảng giá ABS. Màu ly theo quy ước bảng giá ABS.</div>
+  </aside>
+</main>
+
+<div class="modal show" id="joinModal">
+  <div class="box">
+    <h2>☕ Vào Cà phê ABS</h2>
+    <p>Quán nhận tối đa 30 khách cùng lúc và có 30 ghế. Vào quán bạn sẽ ra quầy order trước, nhân viên sẽ chào bạn. Order mã nào thì nhận ly cà phê mã đó.</p>
+    <input id="nameIn" maxlength="18" placeholder="Tên của bạn">
+    <div class="swatches" id="swatches"></div>
+    <button class="btn primary" id="joinBtn" style="width:100%;padding:12px">Vào quán</button>
+  </div>
+</div>
+<div class="modal" id="waitModal">
+  <div class="box" style="text-align:center">
+    <div style="font-size:40px">⏳</div>
+    <h2>Quán đang kín chỗ</h2>
+    <p id="waitText">Đang kiểm tra chỗ trống…</p>
+    <p style="font-size:12px;margin:0">Giữ trang này mở để không mất lượt.</p>
+  </div>
+</div>
+<div class="modal" id="infoModal"><div class="box info" id="infoBox"></div></div>
+
+<script>
+(() => {
+'use strict';
+/* ================== DỮ LIỆU (MÔ PHỎNG) ==================
+   mã | tên | sàn (H=HOSE, N=HNX, U=UPCOM) | giá tham chiếu (nghìn đ) | vốn hóa (nghìn tỷ, xấp xỉ)
+   Khi có nguồn giá thật: thay danh sách này và hàm tickPrices(). */
+const LIST = `VCB|Vietcombank|H|62.5|520
+VIC|Vingroup|H|95|360
+VGI|Viettel Global|U|90|270
+BID|BIDV|H|38.2|265
+ACV|Cảng Hàng không Việt Nam|U|120|260
+TCB|Techcombank|H|34.5|245
+VHM|Vinhomes|H|58|240
+CTG|VietinBank|H|36.1|195
+FPT|FPT Corp|H|118|175
+HPG|Hòa Phát|H|26.5|170
+VPB|VPBank|H|19.8|157
+GAS|PV Gas|H|66|155
+MBB|MB Bank|H|24.6|150
+VNM|Vinamilk|H|61|127
+VPL|Vinpearl|H|70|125
+GVR|Cao su Việt Nam|H|30|120
+MSN|Masan Group|H|78|112
+ACB|Ngân hàng ACB|H|24.9|111
+MCH|Masan Consumer|U|150|108
+MWG|Thế Giới Di Động|H|72|106
+LPB|LPBank|H|32|95
+HDB|HDBank|H|23.5|82
+STB|Sacombank|H|42|79
+BSR|Lọc hóa dầu Bình Sơn|U|21.5|66
+HVN|Vietnam Airlines|H|30|66
+SAB|Sabeco|H|48.5|62
+BCM|Becamex IDC|H|60|62
+VRE|Vincom Retail|H|27|61
+VIB|Ngân hàng VIB|H|19|56
+VJC|Vietjet Air|H|102|55
+VEA|VEAM|U|40|53
+SHB|Ngân hàng SHB|H|12.8|52
+SSI|Chứng khoán SSI|H|25.4|50
+PLX|Petrolimex|H|36|46
+SSB|SeABank|H|17|42
+TPB|TPBank|H|15|40
+DGC|Hóa chất Đức Giang|H|98|37
+BVH|Tập đoàn Bảo Việt|H|50|37
+EIB|Eximbank|H|19|35
+GEX|Gelex|H|40|34
+KDH|Nhà Khang Điền|H|33|33
+REE|Cơ điện lạnh REE|H|68|32
+POW|PV Power|H|13.2|31
+MSB|Ngân hàng MSB|H|12|31
+FOX|FPT Telecom|U|80|30
+VEF|VEFAC|U|180|30
+PNJ|Vàng bạc Đá quý PNJ|H|82|28
+OCB|Ngân hàng OCB|H|11|27
+VCI|Chứng khoán Vietcap|H|36|26
+VIX|Chứng khoán VIX|H|17|25
+GMD|Gemadept|H|58|24
+NVL|Novaland|H|11.5|22
+FRT|FPT Retail|H|160|22
+KBC|Đô thị Kinh Bắc|H|28|21
+VND|Chứng khoán VNDirect|H|14.2|21
+NAB|Nam A Bank|H|15|20
+PGV|Tổng công ty Phát điện 3|U|18|20
+VGC|Viglacera|H|45|20
+DCM|Đạm Cà Mau|H|36|19
+HCM|Chứng khoán HSC|H|26|19
+MSR|Masan High-Tech Materials|U|17|18
+PDR|Phát triển BĐS Phát Đạt|H|19|17
+QNS|Đường Quảng Ngãi|U|48|17
+KDC|Tập đoàn Kido|H|55|16
+PVS|DV Kỹ thuật Dầu khí PTSC|N|33|16
+MBS|Chứng khoán MB|N|28|16
+HAG|Hoàng Anh Gia Lai|H|15|16
+HUT|Tasco|N|17|15
+NLG|Đầu tư Nam Long|H|38|15
+IDC|IDICO|N|47|15
+SNZ|Sonadezi|U|40|15
+DPM|Đạm Phú Mỹ|H|36|14
+DXG|Tập đoàn Đất Xanh|H|16.5|14
+VTP|Viettel Post|H|120|14
+DHG|Dược Hậu Giang|H|105|14
+SIP|Đầu tư Sài Gòn VRG|H|70|14
+VNZ|VNG|U|450|13
+THD|Thaiholdings|N|35|13
+CTR|Công trình Viettel|H|110|12
+PVD|Khoan Dầu khí PV Drilling|H|21|12
+VCG|Vinaconex|H|20|12
+PVI|Bảo hiểm PVI|N|50|12
+FTS|Chứng khoán FPT|H|40|12
+OIL|PV Oil|U|12|12
+MML|Masan MEATLife|U|35|12
+KSV|Khoáng sản TKV|N|60|12
+TCH|Tài chính Hoàng Huy|H|18|12
+DIG|DIC Corp|H|18|11
+VHC|Vĩnh Hoàn|H|60|11
+SBT|TTC AgriS|H|15|11
+SHS|Chứng khoán SHS|N|13.5|11
+VSH|Thủy điện Vĩnh Sơn Sông Hinh|H|50|11
+HSG|Tập đoàn Hoa Sen|H|17.2|10
+VCS|Vicostone|N|60|10
+BSI|Chứng khoán BIDV|H|45|10
+BWE|Nước Môi trường Bình Dương|H|45|10
+BAB|Ngân hàng Bắc Á|N|11|10
+ABB|Ngân hàng ABBank|U|9|9
+BMP|Nhựa Bình Minh|H|110|9
+BAF|Nông nghiệp BAF|H|30|9
+DBC|Dabaco|H|26|9
+HDG|Tập đoàn Hà Đô|H|28|9
+CEO|Tập đoàn C.E.O|N|16|8
+CTD|Coteccons|H|80|8
+PC1|Tập đoàn PC1|H|22|8
+DGW|Digiworld|H|38|8
+EVF|EVNFinance|H|11|8
+CMG|Tập đoàn CMC|H|40|8
+VBB|Vietbank|U|12|7
+NVB|Ngân hàng Quốc Dân|N|10|7
+HAH|Vận tải Hải An|H|55|7
+PHR|Cao su Phước Hòa|H|55|7
+ANV|Nam Việt|H|25|7
+SCS|Dịch vụ Hàng hóa Sài Gòn|H|70|7
+CII|Hạ tầng Kỹ thuật TP.HCM|H|17|7
+IMP|Imexpharm|H|50|7
+NTP|Nhựa Tiền Phong|N|60|7
+HND|Nhiệt điện Hải Phòng|U|14|7
+DTK|Điện lực TKV|N|12|7
+MPC|Thủy sản Minh Phú|U|17|7
+PVT|Vận tải Dầu khí PVTrans|H|17|6
+HHV|Đầu tư Hạ tầng Đèo Cả|H|12.5|6
+NT2|Điện lực Nhơn Trạch 2|H|20|6
+SZC|Sonadezi Châu Đức|H|36|6
+PAN|Tập đoàn PAN|H|28|6
+SJS|SJ Group|H|60|6
+VGT|Vinatex|U|12|6
+QTP|Nhiệt điện Quảng Ninh|U|14|6
+VSC|Container Việt Nam|H|18|5
+HT1|Xi măng Vicem Hà Tiên|H|13|5
+CTS|Chứng khoán Vietinbank|H|35|5
+GEG|Điện Gia Lai|H|13|5
+TDM|Nước Thủ Dầu Một|H|45|5
+HDC|Phát triển nhà Bà Rịa-Vũng Tàu|H|28|5
+IJC|Becamex IJC|H|13|5
+ITA|Đầu tư Công nghiệp Tân Tạo|H|5|5
+DBD|Bidiphar|H|55|5
+DVN|Vinapharm|U|20|5
+KLB|Kienlongbank|U|13|5
+VAB|VietABank|U|10|5
+BVB|BVBank|U|11|5
+HNG|Nông nghiệp Quốc tế HAGL|U|5|5
+SCG|Xây dựng SCG|N|65|5.5
+HHS|Đầu tư DV Hoàng Huy|H|12|4
+ORS|Chứng khoán Tiên Phong|H|14|4
+AGR|Chứng khoán Agribank|H|17|4
+NKG|Thép Nam Kim|H|15|4
+DXS|Dịch vụ BĐS Đất Xanh|H|7|4
+PTB|Phú Tài|H|60|4
+CSV|Hóa chất Cơ bản miền Nam|H|35|4
+TLG|Tập đoàn Thiên Long|H|55|4
+NTC|KCN Nam Tân Uyên|U|180|4
+SGB|Saigonbank|U|12|4
+DPR|Cao su Đồng Phú|H|40|3.5
+PPC|Nhiệt điện Phả Lại|H|11|3.5
+AAA|Nhựa An Phát Xanh|H|9|3.5
+TRA|Traphaco|H|80|3.3
+TCM|Dệt may Thành Công|H|30|3
+MSH|May Sông Hồng|H|45|3
+ASM|Tập đoàn Sao Mai|H|8|3
+DRC|Cao su Đà Nẵng|H|24|3
+DHC|Đông Hải Bến Tre|H|38|3
+QCG|Quốc Cường Gia Lai|H|11|3
+MIG|Bảo hiểm Quân đội|H|17|3
+FMC|Thực phẩm Sao Ta|H|45|3
+DPG|Tập đoàn Đạt Phương|H|45|3
+VDS|Chứng khoán Rồng Việt|H|12|2.5
+TNG|Đầu tư Thương mại TNG|N|20|2.5
+BMI|Bảo hiểm Bảo Minh|H|22|2.5
+HBC|Xây dựng Hòa Bình|U|7|2.5
+BFC|Phân bón Bình Điền|H|40|2.3
+STK|Sợi Thế Kỷ|H|25|2
+IDI|Đầu tư Đa Quốc Gia I.D.I|H|8|2
+ELC|Elcom|H|20|2
+HQC|Địa ốc Hoàng Quân|H|3.5|2
+LCG|Lizen|H|10|2
+FCN|Fecon|H|14|2
+CRE|BĐS Thế Kỷ|H|8|2
+HPX|Đầu tư Hải Phát|H|6|2
+KHG|Khải Hoàn Land|H|5|2
+APH|An Phát Holdings|H|8|2
+YEG|Tập đoàn Yeah1|H|15|2
+BVS|Chứng khoán Bảo Việt|N|30|2
+LAS|Supe Phốt phát Lâm Thao|N|18|2
+PLC|Hóa dầu Petrolimex|N|25|2
+VOS|Vận tải biển Việt Nam|H|13|1.8
+SCR|Địa ốc Sài Gòn Thương Tín|H|7|1.7
+VGS|Ống thép Việt Đức|N|30|1.6
+NTL|Đô thị Từ Liêm|H|20|1.5
+LHG|KCN Long Hậu|H|30|1.5
+HAX|Ô tô Hàng Xanh|H|15|1.5
+TNH|Bệnh viện Quốc tế Thái Nguyên|H|15|1.5
+TIG|Tập đoàn Thăng Long|N|9|1.5
+DTD|Đầu tư Phát triển Thành Đạt|N|25|1.5
+LIX|Bột giặt LIX|H|40|1.3
+PVP|Vận tải Dầu khí Thái Bình Dương|H|14|1.3
+EVS|Chứng khoán Everest|N|7|1.3
+NAF|Nafoods|H|20|1.2
+GIL|Gilimex|H|17|1.2
+TDC|Becamex TDC|H|12|1.2
+EVG|Tập đoàn Everland|H|5|1
+TV2|Tư vấn Xây dựng Điện 2|H|35|1
+DDV|DAP Vinachem|U|25|1
+C4G|Tập đoàn Cienco4|U|8|1
+L14|Licogi 14|N|30|1
+LTG|Lộc Trời|U|12|1
+PVC|Hóa chất Dầu khí PVChem|N|11|1
+D2D|Đô thị Công nghiệp số 2|H|28|0.9
+DRI|Cao su Đắk Lắk|U|12|0.9
+APS|Chứng khoán APEC|N|6|0.8
+SMC|Đầu tư Thương mại SMC|H|9|0.7
+S99|Sông Đà 9.09|N|7|0.7
+DP3|Dược phẩm Trung ương 3|N|60|0.6
+HLD|BĐS HUDLAND|N|25|0.6
+CAP|Lâm nông sản Yên Bái|N|50|0.5
+NRC|Tập đoàn NRC|N|5|0.5
+HGM|Cơ khí Khoáng sản Hà Giang|N|40|0.5
+C69|Xây dựng 1369|N|7|0.4`;
+
+const EXN = {H:'HOSE', N:'HNX', U:'UPCOM'};
+const BAND = {HOSE:0.07, HNX:0.10, UPCOM:0.15};
+const tickSize = (p, ex) => ex !== 'HOSE' ? 100 : (p < 10000 ? 10 : p < 50000 ? 50 : 100);
+const COLORS = {up:'#22c55e', down:'#ef4444', ref:'#facc15', ceil:'#e879f9', floor:'#22d3ee'};
+const ARROW = {up:'▲', down:'▼', ref:'■', ceil:'▲', floor:'▼'};
+
+const stocks = LIST.trim().split('\n').map(line => {
+  const [t, name, e, refK, cap] = line.split('|');
+  const ex = EXN[e], ref = Math.round(parseFloat(refK)*1000), b = BAND[ex];
+  const hi = ref*(1+b), lo = ref*(1-b);
+  const ceil = Math.floor(hi / tickSize(hi,ex)) * tickSize(hi,ex);
+  const floor = Math.ceil(lo / tickSize(lo,ex)) * tickSize(lo,ex);
+  return {t, name, ex, ref, ceil, floor, cap: parseFloat(cap), price: ref, val: 0, hot: 0};
+});
+const byT = Object.fromEntries(stocks.map(s => [s.t, s]));
+let maxCap = Math.max(...stocks.map(s => s.cap));
+const cupR = (s, k) => (5.5 + 9.5*Math.sqrt(s.cap/maxCap)) * (k || 1);
+
+function statusOf(s){
+  if (s.price >= s.ceil) return 'ceil';
+  if (s.price <= s.floor) return 'floor';
+  if (s.price === s.ref) return 'ref';
+  return s.price > s.ref ? 'up' : 'down';
+}
+const colOf = s => COLORS[statusOf(s)];
+const fmt = v => (v/1000).toFixed(2);
+const pct = s => (s.price - s.ref) / s.ref * 100;
+const sgn = v => (v >= 0 ? '+' : '') + v.toFixed(2);
+const snap = (s, v) => { const ts = tickSize(v, s.ex); return Math.min(s.ceil, Math.max(s.floor, Math.round(v/ts)*ts)); };
+
+/* Giá mô phỏng tính từ đồng hồ (3 giây một bước) và mã cổ phiếu, không dùng số ngẫu nhiên:
+   mọi người mở trang cùng lúc thấy cùng một giá, cùng màu ly, cùng top 10. */
+function hash(str){ let h = 2166136261; for (let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+const DAY = Math.floor(Date.now() / 86400000);
+stocks.forEach(s => {
+  const h = hash(s.t + ':' + DAY);
+  s.ph = [0,1,2,3,4,5].map(i => ((h >>> (i*5)) & 31) / 31 * Math.PI * 2);
+  s.bias = (((h >>> 30) & 3) - 1.5) / 3.5;          // mã này hôm nay nghiêng tăng hay giảm
+});
+let stepNow = -1;
+function computeAt(k){
+  stocks.forEach(s => {
+    const p = s.ph;
+    const n = 0.5*Math.sin(k*0.021 + p[0]) + 0.3*Math.sin(k*0.067 + p[1]) + 0.15*Math.sin(k*0.19 + p[2]) + 0.08*Math.sin(k*0.61 + p[3]);
+    const x = (n + s.bias) * BAND[s.ex] * 1.15;
+    let v = snap(s, s.ref * (1 + x));
+    if (Math.abs(v - s.ref) < s.ref*0.003) v = s.ref;
+    s.price = v;
+    s.val = Math.pow(s.cap, 0.85) * (1 + 0.5*Math.sin(k*0.05 + p[4]) + 0.3*Math.sin(k*0.23 + p[5]));
+    if (hash(s.t + ':' + Math.floor(k/10)) % 61 === 0) s.val *= 3;
+  });
+}
+let hotTop = [];
+function rankHot(){
+  stocks.forEach(s => { s.hot = s.val * (1 + Math.abs(pct(s))/2.5) * (statusOf(s) === 'ceil' ? 1.6 : 1); });
+  hotTop = [...stocks].sort((a,b) => b.hot - a.hot || (a.t < b.t ? -1 : 1)).slice(0,10);
+}
+function tickPrices(){
+  if (live) return;                      // đang dùng giá từ máy chủ
+  const k = Math.floor(Date.now() / 3000);
+  if (k === stepNow) return;
+  stepNow = k; computeAt(k); rankHot(); refreshUI();
+}
+computeAt(Math.floor(Date.now() / 3000)); rankHot();
+
+/* ---------- Giá từ máy chủ (khi trang chạy trên máy chủ Cà phê ABS) ---------- */
+let live = null;   // {source, at}
+function applyServerPrices(d){
+  if (!d || !Array.isArray(d.stocks) || !d.stocks.length) return;
+  const arr = [];
+  d.stocks.forEach(x => {
+    if (!x || typeof x.t !== 'string' || !/^[A-Z0-9]{1,10}$/.test(x.t)) return;
+    const ref = +x.ref; if (!(ref > 0)) return;
+    const ex = BAND[x.ex] ? x.ex : 'HOSE';
+    arr.push({t:x.t, name:String(x.name || x.t).slice(0,80), ex, ref, ceil:+x.ceil || ref, floor:+x.floor || ref,
+      price:+x.price || ref, cap:+x.cap > 0 ? +x.cap : 0.5, val:+x.val || 0, hot:0});
+  });
+  if (!arr.length) return;
+  stocks.length = 0; arr.forEach(s => stocks.push(s));
+  Object.keys(byT).forEach(k => delete byT[k]); stocks.forEach(s => { byT[s.t] = s; });
+  maxCap = Math.max(...stocks.map(s => s.cap));
+  live = {source: d.source, at: d.updatedAt};
+  rankHot(); refreshUI(); updateDataBadge();
+}
+const liveReal = () => !!(live && live.source !== 'sim');
+const liveTime = () => live && live.at ? new Date(live.at).toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'}) : '';
+function updateDataBadge(){
+  const pill = document.getElementById('dataPill'), note = document.getElementById('dataNote');
+  if (liveReal()){
+    pill.className = 'pill ok'; pill.textContent = `● Giá ABS · cập nhật ${liveTime()}`; pill.title = 'Giá lấy từ bảng giá ABS, cập nhật mỗi phút';
+    note.innerHTML = `Thực đơn có <b>${stocks.length}</b> mã, giá lấy từ bảng giá ABS và tự cập nhật mỗi phút (lần gần nhất ${liveTime()}). Màu ly theo quy ước bảng giá ABS.`;
+  } else if (live){
+    pill.className = 'pill warn'; pill.textContent = `⚠ Giá mô phỏng · ${liveTime()}`;
+    note.innerHTML = `Máy chủ đang chạy <b>nguồn giá mô phỏng</b> (${stocks.length} mã, đổi mỗi phút). Cấu hình nguồn ABS để có giá thật. Màu ly theo quy ước bảng giá ABS.`;
+  }
+}
+
+/* ================== KHÔNG GIAN ISOMETRIC ================== */
+const VW = 1000, VH = 700, TW = 32, TH = 16, GX = 16, GY = 13, WH = 150;
+const ORX = 452, ORY = 205;
+const iso = (gx, gy) => ({x: ORX + (gx-gy)*TW, y: ORY + (gx+gy)*TH});
+const unIso = (x, y) => { const a = (x-ORX)/TW, b = (y-ORY)/TH; return {gx:(a+b)/2, gy:(b-a)/2}; };
+const COUNTER = {gx0:0.9, gy0:2.6, gx1:2.4, gy1:8.4, h:34};
+const ORDER = {gx:3.25, gy:5.5};
+const BARISTA = {gx:0.45, gy:5.5};
+const DOOR = {gx:1.1, gy:11.6};
+const TABLES = [];
+[[5.9,4.3],[9.7,4.3],[13.5,4.3],[5.9,9.6],[9.7,9.6],[13.5,9.6]].forEach(([gx,gy]) => TABLES.push({gx, gy}));
+const SEATS = [];
+TABLES.forEach((tb, ti) => {
+  for (let k=0;k<5;k++){
+    const a = Math.PI/2 + k*2*Math.PI/5 + 0.3;
+    SEATS.push({i: SEATS.length, ti, gx: tb.gx + Math.cos(a)*1.3, gy: tb.gy + Math.sin(a)*1.3});
+  }
+});
+
+/* ================== TRẠNG THÁI ================== */
+const SWATCH = ['#a855f7','#ec4899','#f43f5e','#f97316','#eab308','#22c55e','#14b8a6','#3b82f6','#6366f1','#e2e8f0'];
+const me = {name:'', color:SWATCH[Math.floor(Math.random()*SWATCH.length)], gx:DOOR.gx, gy:DOOR.gy, tx:null, ty:null,
+  dir:1, walk:0, moving:false, seat:-1, carry:null, e:'none', say:null, joined:false,
+  pendingSit:-1, stuck:0,
+  q:0, want:null,          // q: thời điểm vào hàng chờ order (0 = không xếp hàng), want: mã muốn order
+  ja:0, waiting:false};    // ja: thời điểm bấm vào quán, waiting: đang chờ ngoài cửa vì quán đủ 30 người
+const MAX_GUESTS = 30;
+const barista = {name:'Mai · Pha chế', color:'#7c3aed', gx:BARISTA.gx, gy:BARISTA.gy, dir:1, walk:0, moving:false, seat:-1, carry:null, e:'none', say:null, busy:0};
+let serving = null;       // ly của mình đang pha: {t, start}
+let counterServe = null;  // ly đang hiện trên quầy (của mình hoặc người khác)
+let myPeer = '', myServerQ = 0, mySelf = null;
+const peers = new Map();  // chỉ những người đã vào quán (tối đa 30)
+const lobby = new Map();  // tất cả người đang mở trang, kể cả người chờ ngoài cửa
+const keys = new Set();
+let hits = [];        // vùng ấn 3 lần: {t, x0,y0,x1,y1}
+
+/* ================== CANVAS ================== */
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const stage = document.getElementById('stage');
+let view = {s:1, ox:0, oy:0, dpr:1}, bg = null;
+function resize(){
+  const r = stage.getBoundingClientRect();
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.max(1, Math.round(r.width*dpr)); cv.height = Math.max(1, Math.round(r.height*dpr));
+  const s = Math.min(r.width/VW, r.height/VH) * 1.02;
+  view = {s, ox:(r.width - VW*s)/2, oy:(r.height - VH*s)/2 - 10*s, dpr};
+  buildBg(s*dpr);
+}
+const toV = (cx, cy) => { const r = cv.getBoundingClientRect(); return {x:(cx - r.left - view.ox)/view.s, y:(cy - r.top - view.oy)/view.s}; };
+function rr(c,x,y,w,h,r){ c.beginPath(); if (c.roundRect) c.roundRect(x,y,w,h,r); else c.rect(x,y,w,h); }
+function poly(c, pts){ c.beginPath(); pts.forEach((p,i) => i ? c.lineTo(p[0],p[1]) : c.moveTo(p[0],p[1])); c.closePath(); }
+const P = (gx, gy, z) => { const q = iso(gx, gy); return [q.x, q.y - (z||0)]; };
+const FONT = w => `${w} "Be Vietnam Pro", system-ui, sans-serif`;
+
+function isoBox(c, gx0, gy0, gx1, gy1, h, top, left, right){
+  c.fillStyle = left;  poly(c, [P(gx0,gy1,0), P(gx1,gy1,0), P(gx1,gy1,h), P(gx0,gy1,h)]); c.fill();
+  c.fillStyle = right; poly(c, [P(gx1,gy0,0), P(gx1,gy1,0), P(gx1,gy1,h), P(gx1,gy0,h)]); c.fill();
+  c.fillStyle = top;   poly(c, [P(gx0,gy0,h), P(gx1,gy0,h), P(gx1,gy1,h), P(gx0,gy1,h)]); c.fill();
+}
+function leftWall(c){ const o = iso(0, GY); c.transform(1, -0.5, 0, 1, o.x, o.y); }   // u: px sang phải, w: px xuống
+function rightWall(c){ const o = iso(0, 0); c.transform(1, 0.5, 0, 1, o.x, o.y); }
+
+function buildBg(scale){
+  bg = document.createElement('canvas');
+  bg.width = Math.ceil(VW*scale); bg.height = Math.ceil(VH*scale);
+  const c = bg.getContext('2d'); c.scale(scale, scale);
+  // tường trái
+  const g1 = c.createLinearGradient(0, ORY-WH, 0, ORY+GY*TH);
+  g1.addColorStop(0, '#1b1030'); g1.addColorStop(1, '#2a1a48');
+  c.fillStyle = g1; poly(c, [P(0,0,WH), P(0,GY,WH), P(0,GY,0), P(0,0,0)]); c.fill();
+  // tường phải
+  const g2 = c.createLinearGradient(0, ORY-WH, 0, ORY+GX*TH);
+  g2.addColorStop(0, '#140b25'); g2.addColorStop(1, '#22153d');
+  c.fillStyle = g2; poly(c, [P(0,0,WH), P(GX,0,WH), P(GX,0,0), P(0,0,0)]); c.fill();
+  // nẹp tường
+  c.fillStyle = '#3b2566';
+  poly(c, [P(0,0,WH), P(0,GY,WH), P(0,GY,WH-6), P(0,0,WH-6)]); c.fill();
+  poly(c, [P(0,0,WH), P(GX,0,WH), P(GX,0,WH-6), P(0,0,WH-6)]); c.fill();
+  // sọc gỗ tường
+  c.strokeStyle = '#ffffff08'; c.lineWidth = 1;
+  for (let gy=0.5; gy<GY; gy+=0.5){ c.beginPath(); c.moveTo(...P(0,gy,0)); c.lineTo(...P(0,gy,WH-6)); c.stroke(); }
+  for (let gx=0.5; gx<GX; gx+=0.5){ c.beginPath(); c.moveTo(...P(gx,0,0)); c.lineTo(...P(gx,0,WH-6)); c.stroke(); }
+  // sàn
+  for (let gx=0; gx<GX; gx++) for (let gy=0; gy<GY; gy++){
+    c.fillStyle = (gx+gy)%2 ? '#1a1130' : '#21163b';
+    poly(c, [P(gx,gy), P(gx+1,gy), P(gx+1,gy+1), P(gx,gy+1)]); c.fill();
+  }
+  c.strokeStyle = '#ffffff0a'; c.lineWidth = 1;
+  for (let gx=0; gx<=GX; gx++){ c.beginPath(); c.moveTo(...P(gx,0)); c.lineTo(...P(gx,GY)); c.stroke(); }
+  for (let gy=0; gy<=GY; gy++){ c.beginPath(); c.moveTo(...P(0,gy)); c.lineTo(...P(GX,gy)); c.stroke(); }
+  // thảm giữa phòng
+  c.fillStyle = '#2d1650'; poly(c, [P(4.2,2.4), P(15.3,2.4), P(15.3,11.6), P(4.2,11.6)]); c.fill();
+  c.strokeStyle = '#a855f7'; c.lineWidth = 2; c.shadowColor = '#a855f7'; c.shadowBlur = 10;
+  poly(c, [P(4.5,2.7), P(15,2.7), P(15,11.3), P(4.5,11.3)]); c.stroke(); c.shadowBlur = 0;
+  // lối xếp hàng order: dải sàn + cột dây
+  c.fillStyle = '#a855f71a'; poly(c, [P(2.75,5.0), P(3.8,5.0), P(3.8,11.9), P(2.75,11.9)]); c.fill();
+  c.strokeStyle = '#a855f766'; c.lineWidth = 1.2; c.setLineDash([4,4]);
+  poly(c, [P(2.75,5.0), P(3.8,5.0), P(3.8,11.9), P(2.75,11.9)]); c.stroke(); c.setLineDash([]);
+  for (let k=0;k<7;k++){ const [x,y] = P(ORDER.gx, ORDER.gy + k); c.fillStyle = k ? '#c084fc55' : '#f0abfcaa'; c.beginPath(); c.ellipse(x, y, 8, 4, 0, 0, 7); c.fill(); }
+  const posts = [6.0, 7.8, 9.6, 11.4].map(gy => P(3.95, gy));
+  c.strokeStyle = '#e879f9'; c.lineWidth = 2; c.shadowColor = '#e879f9'; c.shadowBlur = 8;
+  c.beginPath(); posts.forEach(([x,y], i) => { const a = [x, y-16]; if (i){ const [px,py] = posts[i-1]; c.quadraticCurveTo((px+x)/2, (py+y)/2 - 10, a[0], a[1]); } else c.moveTo(a[0], a[1]); }); c.stroke(); c.shadowBlur = 0;
+  posts.forEach(([x,y]) => { c.fillStyle = '#d4d4d8'; c.fillRect(x-1.5, y-18, 3, 18); c.beginPath(); c.arc(x, y-19, 3, 0, 7); c.fill(); c.fillStyle = '#52525b'; c.beginPath(); c.ellipse(x, y, 5, 2.5, 0, 0, 7); c.fill(); });
+  c.save(); const fo = iso(3.3, 11.3); c.transform(1, 0.5, -1, 0.5, fo.x, fo.y);
+  c.font = '800 9px "Be Vietnam Pro", sans-serif'; c.fillStyle = '#f0abfc'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.rotate(-Math.PI/2); c.fillText('XẾP HÀNG ORDER ▶', 0, 0); c.restore();
+  // viền neon chân tường
+  c.lineWidth = 3; c.strokeStyle = '#c084fc'; c.shadowColor = '#c084fc'; c.shadowBlur = 14;
+  c.beginPath(); c.moveTo(...P(0,GY,2)); c.lineTo(...P(0,0,2)); c.lineTo(...P(GX,0,2)); c.stroke();
+  c.strokeStyle = '#f0abfc'; c.lineWidth = 2;
+  c.beginPath(); c.moveTo(...P(0,GY,WH-8)); c.lineTo(...P(0,0,WH-8)); c.lineTo(...P(GX,0,WH-8)); c.stroke();
+  c.shadowBlur = 0;
+  // cửa ra vào (tường trái)
+  c.save(); leftWall(c);
+  c.fillStyle = '#05020b'; rr(c, 22, -96, 56, 96, 6); c.fill();
+  c.strokeStyle = '#a855f7'; c.lineWidth = 3; c.shadowColor = '#a855f7'; c.shadowBlur = 12; rr(c, 22, -96, 56, 96, 6); c.stroke(); c.shadowBlur = 0;
+  c.fillStyle = '#c4b5fd'; c.font = FONT(700) .replace('700','700 9px'); c.textAlign = 'center'; c.fillText('LỐI VÀO', 50, -102);
+  // biển neon CÀ PHÊ ABS
+  c.fillStyle = '#0a0612'; rr(c, 150, -138, 200, 46, 10); c.fill();
+  c.strokeStyle = '#7c3aed'; c.lineWidth = 2; rr(c, 150, -138, 200, 46, 10); c.stroke();
+  c.font = '800 25px "Be Vietnam Pro", sans-serif'; c.fillStyle = '#f5d0fe'; c.shadowColor = '#e879f9'; c.shadowBlur = 18;
+  c.textBaseline = 'middle'; c.fillText('CÀ PHÊ ABS', 250, -114); c.shadowBlur = 0;
+  c.font = '700 11px "Be Vietnam Pro", sans-serif'; c.fillStyle = '#c4b5fd'; c.fillText('☕  QUẦY ORDER  ☕', 250, -80);
+  // kệ ly sau quầy
+  c.fillStyle = '#3b2566'; rr(c, 160, -50, 180, 5, 2); c.fill();
+  for (let u=170; u<335; u+=20){ c.fillStyle = '#ede9fe'; rr(c, u, -62, 11, 12, 2); c.fill(); }
+  c.restore();
+  // cửa sổ tường phải
+  c.save(); rightWall(c);
+  c.fillStyle = '#0a0612'; rr(c, 34, -126, 74, 70, 6); c.fill();
+  const g3 = c.createLinearGradient(0,-122,0,-60); g3.addColorStop(0,'#312e81'); g3.addColorStop(1,'#7c3aed');
+  c.fillStyle = g3; rr(c, 38, -122, 66, 62, 4); c.fill();
+  c.fillStyle = '#fef3c7'; c.beginPath(); c.arc(84, -104, 7, 0, 7); c.fill();
+  [[52,-112],[66,-96],[94,-82],[46,-78]].forEach(([x,y]) => { c.fillStyle='#fff'; c.fillRect(x,y,1.5,1.5); });
+  c.strokeStyle = '#0a0612'; c.lineWidth = 3; c.beginPath(); c.moveTo(71,-122); c.lineTo(71,-60); c.stroke();
+  c.restore();
+  // cây
+  [[15.3,0.8],[0.8,12.3]].forEach(([gx,gy]) => {
+    const [x,y] = P(gx,gy);
+    c.fillStyle = '#2a1a48'; poly(c, [[x-10,y-16],[x+10,y-16],[x+8,y],[x-8,y]]); c.fill();
+    c.fillStyle = '#15803d'; [[0,-30,13],[-9,-22,9],[9,-22,9],[0,-40,9]].forEach(([dx,dy,r]) => { c.beginPath(); c.arc(x+dx,y+dy,r,0,7); c.fill(); });
+    c.fillStyle = '#22c55e'; c.beginPath(); c.arc(x-3,y-34,5,0,7); c.fill();
+  });
+}
+
+/* ================== VẼ ĐỐI TƯỢNG ================== */
+function drawCup(c, x, base, r, s, t, opts){
+  opts = opts || {};
+  const col = colOf(s), top = base - r*1.45;
+  if (opts.pop != null){ c.save(); c.translate(x, base); c.scale(opts.pop, opts.pop); c.translate(-x, -base); }
+  c.fillStyle = '#00000055'; c.beginPath(); c.ellipse(x+1, base+2, r*1.35, r*0.36, 0, 0, 7); c.fill();
+  c.fillStyle = '#ede9fe'; c.beginPath(); c.ellipse(x, base, r*1.3, r*0.32, 0, 0, 7); c.fill();
+  c.strokeStyle = '#ede9fe'; c.lineWidth = Math.max(2, r*0.2);
+  c.beginPath(); c.ellipse(x + r*0.95, base - r*0.78, r*0.34, r*0.38, 0, -Math.PI/2, Math.PI/2); c.stroke();
+  const g = c.createLinearGradient(x-r, 0, x+r, 0);
+  g.addColorStop(0, '#d8cdf0'); g.addColorStop(0.35, '#ffffff'); g.addColorStop(1, '#c4b5e0');
+  c.fillStyle = g; c.beginPath(); c.moveTo(x-r, top); c.lineTo(x+r, top);
+  c.quadraticCurveTo(x+r*0.92, base-r*0.1, x+r*0.7, base-r*0.08); c.lineTo(x-r*0.7, base-r*0.08);
+  c.quadraticCurveTo(x-r*0.92, base-r*0.1, x-r, top); c.closePath(); c.fill();
+  c.save(); c.clip(); c.fillStyle = col; c.globalAlpha = 0.9; c.fillRect(x-r, top + r*0.62, r*2, r*0.24); c.restore();
+  c.fillStyle = '#00000033'; c.beginPath(); c.ellipse(x, top, r, r*0.3, 0, 0, 7); c.fill();
+  c.fillStyle = col; c.shadowColor = col; c.shadowBlur = opts.glow ? 10 : 4;
+  c.beginPath(); c.ellipse(x, top+1, r*0.88, r*0.24, 0, 0, 7); c.fill(); c.shadowBlur = 0;
+  c.fillStyle = '#ffffff66'; c.beginPath(); c.ellipse(x - r*0.25, top, r*0.32, r*0.07, 0, 0, 7); c.fill();
+  if (opts.steam !== false){
+    c.strokeStyle = '#f5f3ff'; c.lineWidth = 1.3; c.lineCap = 'round';
+    for (let k=0;k<2;k++){
+      const ph = t*1.6 + x*0.05 + k*2.1, a = (Math.sin(ph)+1)/2;
+      c.globalAlpha = 0.15 + a*0.25;
+      const sx = x + (k ? r*0.3 : -r*0.25);
+      c.beginPath(); c.moveTo(sx, top-3);
+      for (let j=1;j<=5;j++) c.lineTo(sx + Math.sin(ph + j*0.9)*2.5, top - 3 - j*2.6*(0.7 + r/30));
+      c.stroke();
+    }
+    c.globalAlpha = 1;
+  }
+  if (opts.pop != null) c.restore();
+  if (opts.hit) hits.push({t:s.t, x0:x - r*1.4, y0:top - 8, x1:x + r*1.4, y1:base + 6});
+}
+
+function bubble(c, x, y, lines, style){
+  c.font = FONT(600).replace('600','600 11px');
+  const w = Math.max(...lines.map(l => c.measureText(l).width)) + 18, h = lines.length*15 + 8;
+  c.fillStyle = style === 'staff' ? '#faf5ff' : '#f5f3ff'; c.shadowColor = '#a855f7'; c.shadowBlur = style === 'staff' ? 14 : 0;
+  rr(c, x - w/2, y - h, w, h, 10); c.fill(); c.shadowBlur = 0;
+  c.beginPath(); c.moveTo(x-5, y-1); c.lineTo(x+5, y-1); c.lineTo(x, y+6); c.fill();
+  c.fillStyle = '#2e1065'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  lines.forEach((l,i) => { c.font = FONT(i === 0 ? 700 : 500).replace(/(\d00)/, '$1 11px'); c.fillText(l, x, y - h + 11 + i*15); });
+}
+
+function drawChar(c, ch, t, o){
+  o = o || {};
+  const q = iso(ch.gx, ch.gy), x = q.x, y = q.y, sit = ch.seat >= 0 || o.role === 'staff' && false;
+  const e = ch.e || 'none';
+  let bob = 0, tilt = 0, shake = 0;
+  if (ch.moving) bob = Math.abs(Math.sin(ch.walk))*1.5;
+  if (e === 'dance'){ bob = Math.abs(Math.sin(t*8))*6; tilt = Math.sin(t*4)*0.16; }
+  else if (e === 'happy'){ const k = (t*1.5) % 1; bob = k < 0.3 ? Math.sin(k/0.3*Math.PI)*8 : 0; }
+  else if (e === 'angry') shake = Math.sin(t*45)*1.3;
+  if (o.role === 'staff') bob = Math.sin(t*2)*0.8;
+  const lift = sit ? 13 : 0;
+  c.fillStyle = '#00000066'; c.beginPath(); c.ellipse(x, y+1, 11, 5, 0, 0, 7); c.fill();
+  if (e === 'dance' && !sit){
+    c.strokeStyle = '#e879f9'; c.globalAlpha = 0.5 + 0.3*Math.sin(t*8); c.lineWidth = 2;
+    c.beginPath(); c.ellipse(x, y+1, 18 + Math.sin(t*8)*3, 8, 0, 0, 7); c.stroke(); c.globalAlpha = 1;
+  }
+  c.save(); c.translate(x + shake, y - lift - bob); c.rotate(tilt);
+  // chân
+  c.fillStyle = '#1e1b2e';
+  if (!sit){
+    const sw = ch.moving ? Math.sin(ch.walk)*3.5 : (e === 'dance' ? Math.sin(t*8)*3 : 0);
+    rr(c, -6 + sw*0.3, -13, 5, 13 - Math.max(0, sw)*0.4, 2); c.fill();
+    rr(c, 1 - sw*0.3, -13, 5, 13 - Math.max(0, -sw)*0.4, 2); c.fill();
+  } else { rr(c, -7, -6, 14, 6, 3); c.fill(); }
+  // thân
+  const sad = e === 'sad';
+  c.fillStyle = ch.color; rr(c, -8, sad ? -29 : -31, 16, 19, 6); c.fill();
+  c.fillStyle = '#ffffff22'; rr(c, -8, sad ? -29 : -31, 16, 5, 4); c.fill();
+  if (o.role === 'staff'){ c.fillStyle = '#f5f3ff'; rr(c, -6, -23, 12, 12, 3); c.fill(); c.fillStyle = ch.color; c.fillRect(-1, -22, 2, 4); }
+  // tay
+  let L, R;
+  const sh = sad ? -25 : -27;
+  if (ch.carry){ L = [-6, -19]; R = [6, -19]; }
+  else if (e === 'dance'){ L = [-12, -40 + Math.sin(t*8)*4]; R = [12, -40 - Math.sin(t*8)*4]; }
+  else if (e === 'wave' || o.greet){ L = [-10, -16]; R = [12 + Math.sin(t*12)*3, -42]; }
+  else if (sad){ L = [-8, -12]; R = [8, -12]; }
+  else if (e === 'angry'){ L = [-11, -19]; R = [11, -19]; }
+  else if (e === 'happy'){ L = [-12, -34]; R = [12, -34]; }
+  else { const as = ch.moving ? Math.sin(ch.walk)*3 : 0; L = [-10, -17 + as]; R = [10, -17 - as]; }
+  c.strokeStyle = ch.color; c.lineWidth = 4; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(-6, sh); c.lineTo(L[0], L[1]); c.moveTo(6, sh); c.lineTo(R[0], R[1]); c.stroke();
+  if (ch.carry && byT[ch.carry]){
+    const s = byT[ch.carry];
+    drawCup(c, 0, -14, cupR(s, 0.75), s, t, {steam: true});
+  }
+  c.fillStyle = '#f1c7a0'; c.beginPath(); c.arc(L[0], L[1], 3, 0, 7); c.arc(R[0], R[1], 3, 0, 7); c.fill();
+  // đầu
+  const hy = sad ? -36 : -39;
+  c.fillStyle = '#f1c7a0'; c.beginPath(); c.arc(0, hy, 8.5, 0, 7); c.fill();
+  if (e === 'angry'){ c.fillStyle = '#ef444455'; c.beginPath(); c.arc(0, hy, 8.5, 0, 7); c.fill(); }
+  c.fillStyle = o.role === 'staff' ? '#3b0764' : '#1e1029';
+  c.beginPath(); c.arc(0, hy-1.5, 9, Math.PI*1.02, Math.PI*1.98); c.fill();
+  if (o.role === 'staff'){ c.fillStyle = '#f5f3ff'; rr(c, -8, hy-13, 16, 5, 2); c.fill(); }
+  const ex = ch.dir * 1.8;
+  c.fillStyle = '#1e1029'; c.strokeStyle = '#1e1029'; c.lineWidth = 1.4;
+  if (e === 'happy' || e === 'dance'){
+    c.beginPath(); c.arc(-3+ex, hy+1.5, 1.8, Math.PI*1.1, Math.PI*1.9); c.stroke();
+    c.beginPath(); c.arc(3+ex, hy+1.5, 1.8, Math.PI*1.1, Math.PI*1.9); c.stroke();
+  } else {
+    c.beginPath(); c.arc(-3+ex, hy+(sad?2:1), 1.3, 0, 7); c.arc(3+ex, hy+(sad?2:1), 1.3, 0, 7); c.fill();
+  }
+  if (sad){ c.beginPath(); c.moveTo(-5+ex, hy-2); c.lineTo(-1.5+ex, hy-3.5); c.moveTo(5+ex, hy-2); c.lineTo(1.5+ex, hy-3.5); c.stroke(); }
+  if (e === 'angry'){ c.beginPath(); c.moveTo(-5+ex, hy-3.5); c.lineTo(-1.5+ex, hy-1.5); c.moveTo(5+ex, hy-3.5); c.lineTo(1.5+ex, hy-1.5); c.stroke(); }
+  c.beginPath();
+  if (e === 'happy' || e === 'dance' || o.greet) c.arc(ex, hy+4, 2.8, 0.15*Math.PI, 0.85*Math.PI);
+  else if (sad || e === 'angry') c.arc(ex, hy+7.5, 2.6, 1.15*Math.PI, 1.85*Math.PI);
+  else { c.moveTo(-1.8+ex, hy+5); c.lineTo(1.8+ex, hy+5); }
+  c.stroke();
+  if (sad){ const k = (t*0.9) % 1; c.fillStyle = '#7dd3fc'; c.globalAlpha = 1-k; c.beginPath(); c.ellipse(-3.5+ex, hy+4 + k*8, 1.2, 1.8, 0, 0, 7); c.fill(); c.globalAlpha = 1; }
+  c.restore();
+
+  const hx = x + shake, hyS = y - lift - bob + hy;
+  // hiệu ứng biểu cảm
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  if (e === 'dance'){
+    for (let k=0;k<3;k++){
+      const ph = (t*0.7 + k/3) % 1;
+      c.globalAlpha = 1 - ph; c.fillStyle = ['#f0abfc','#c084fc','#67e8f9'][k];
+      c.font = FONT(800).replace('800','800 13px');
+      c.fillText(k%2 ? '♫' : '♪', hx + (k-1)*15 + Math.sin(ph*7)*4, hyS - 16 - ph*28);
+    }
+    c.globalAlpha = 1;
+  } else if (e === 'sad'){
+    const cy = hyS - 40;
+    c.fillStyle = '#64748b'; [[-8,0,7],[0,-4,9],[9,0,7]].forEach(([dx,dy,r]) => { c.beginPath(); c.arc(hx+dx, cy+dy, r, 0, 7); c.fill(); });
+    c.fillStyle = '#475569'; c.fillRect(hx-14, cy, 30, 6);
+    c.strokeStyle = '#7dd3fc'; c.lineWidth = 1.4;
+    for (let k=0;k<4;k++){ const ph = (t*1.6 + k*0.27) % 1; const rx = hx - 10 + k*7; c.globalAlpha = 1 - ph; c.beginPath(); c.moveTo(rx, cy + 7 + ph*20); c.lineTo(rx - 1, cy + 11 + ph*20); c.stroke(); }
+    c.globalAlpha = 1;
+  } else if (e === 'happy'){
+    for (let k=0;k<3;k++){
+      const ph = (t*0.6 + k/3) % 1; c.globalAlpha = 1 - ph;
+      c.fillStyle = k === 1 ? '#fde047' : '#f472b6'; c.font = FONT(800).replace('800','800 12px');
+      c.fillText(k === 1 ? '✦' : '♥', hx + (k-1)*16, hyS - 16 - ph*24);
+    }
+    c.globalAlpha = 1;
+  } else if (e === 'angry'){
+    c.font = FONT(800).replace('800','800 14px'); c.fillStyle = '#f87171'; c.fillText('💢', hx + 13, hyS - 12);
+    for (let k=0;k<2;k++){ const ph = (t*1.2 + k*0.5) % 1; c.globalAlpha = (1-ph)*0.6; c.fillStyle = '#e2e8f0'; c.beginPath(); c.arc(hx + (k ? 8 : -8) + (k ? ph*6 : -ph*6), hyS - 12 - ph*14, 3 + ph*3, 0, 7); c.fill(); }
+    c.globalAlpha = 1;
+  } else if (e === 'wave' && !o.greet){
+    c.font = FONT(800).replace('800','800 13px'); c.fillText('👋', hx + 20, hyS - 10 + Math.sin(t*10)*2);
+  }
+  // bảng tên
+  let tag = ch.name || 'Khách'; if (o.isMe) tag += ' (bạn)'; else if (o.qpos) tag = `#${o.qpos} · ${tag}`;
+  c.font = FONT(o.isMe ? 700 : 600).replace(/(\d00)/, '$1 10.5px');
+  const tw = c.measureText(tag).width + 12, ty = hyS - 19 - (e === 'sad' ? 22 : 0);
+  c.fillStyle = o.isMe ? '#a855f7ee' : (o.role === 'staff' ? '#0f766edd' : '#0b0713cc');
+  rr(c, hx - tw/2, ty - 7.5, tw, 15, 7.5); c.fill();
+  if (!o.isMe && o.role !== 'staff'){ c.strokeStyle = ch.color; c.lineWidth = 1; rr(c, hx - tw/2, ty - 7.5, tw, 15, 7.5); c.stroke(); }
+  c.fillStyle = '#fff'; c.fillText(tag, hx, ty);
+  let top = ty - 10;
+  if (ch.carry && byT[ch.carry]){
+    const s = byT[ch.carry], lab = `☕ ${s.t} ${fmt(s.price)}`;
+    c.font = FONT(800).replace('800','800 10px'); const lw = c.measureText(lab).width + 10;
+    c.fillStyle = '#0b0713dd'; rr(c, hx - lw/2, top - 13, lw, 13, 6); c.fill();
+    c.fillStyle = colOf(s); c.fillText(lab, hx, top - 6.5);
+    hits.push({t: s.t, x0: hx - lw/2, y0: top - 13, x1: hx + lw/2, y1: top});
+    const cr = cupR(s, 0.75); hits.push({t: s.t, x0: x - cr*1.5, y0: y - lift - bob - 14 - cr*1.6, x1: x + cr*1.5, y1: y - lift - bob - 10});
+    top -= 15;
+  }
+  if (o.qpos && o.isMe){
+    const lab = `⏳ Hàng #${o.qpos}${ch.want ? ' · ' + ch.want : ''}`;
+    c.font = FONT(700).replace('700','700 9.5px'); const lw = c.measureText(lab).width + 10;
+    c.fillStyle = '#3b0764e6'; rr(c, hx - lw/2, top - 13, lw, 13, 6); c.fill();
+    c.fillStyle = '#f5d0fe'; c.fillText(lab, hx, top - 6.5);
+    top -= 15;
+  }
+  if (ch.say && ch.say.until > t) bubble(c, hx, top - 4, ch.say.lines, o.role === 'staff' ? 'staff' : '');
+  if (o.hint){
+    c.font = FONT(600).replace('600','600 10.5px'); const hw = c.measureText(o.hint).width + 14;
+    c.fillStyle = '#000000c8'; rr(c, x - hw/2, y + 8, hw, 17, 8.5); c.fill();
+    c.fillStyle = '#e9d5ff'; c.fillText(o.hint, x, y + 16.5);
+  }
+}
+
+function drawTable(c, tb){
+  const [x, y] = P(tb.gx, tb.gy), R = 0.72, rx = R*TW*Math.SQRT2, ry = R*TH*Math.SQRT2, h = 26;
+  c.fillStyle = '#00000055'; c.beginPath(); c.ellipse(x, y+2, rx*0.6, ry*0.6, 0, 0, 7); c.fill();
+  c.fillStyle = '#120a20'; c.fillRect(x-3, y-h, 6, h);
+  c.fillStyle = '#1a1030'; c.beginPath(); c.ellipse(x, y, 12, 6, 0, 0, 7); c.fill();
+  c.fillStyle = '#2b1a4a'; c.beginPath(); c.ellipse(x, y-h+4, rx, ry, 0, 0, Math.PI); c.lineTo(x-rx, y-h); c.ellipse(x, y-h, rx, ry, 0, Math.PI, 0, true); c.closePath(); c.fill();
+  c.fillStyle = '#3b2566'; c.beginPath(); c.ellipse(x, y-h, rx, ry, 0, 0, 7); c.fill();
+  c.strokeStyle = '#a855f7'; c.lineWidth = 1.5; c.shadowColor = '#a855f7'; c.shadowBlur = 8; c.stroke(); c.shadowBlur = 0;
+  c.fillStyle = '#ffffff10'; c.beginPath(); c.ellipse(x - rx*0.2, y-h-ry*0.2, rx*0.5, ry*0.35, 0, 0, 7); c.fill();
+  // nến nhỏ
+  c.fillStyle = '#fde68a'; c.shadowColor = '#fbbf24'; c.shadowBlur = 10; c.beginPath(); c.arc(x, y-h-4, 2, 0, 7); c.fill(); c.shadowBlur = 0;
+}
+function drawSeat(c, s, occupied){
+  const [x, y] = P(s.gx, s.gy);
+  c.fillStyle = '#00000055'; c.beginPath(); c.ellipse(x, y+1, 13, 6, 0, 0, 7); c.fill();
+  c.fillStyle = occupied ? '#5b21b6' : '#4c1d95';
+  c.beginPath(); c.ellipse(x, y-3, 12, 6, 0, 0, Math.PI); c.lineTo(x-12, y-12); c.ellipse(x, y-12, 12, 6, 0, Math.PI, 0, true); c.closePath(); c.fill();
+  c.fillStyle = occupied ? '#8b5cf6' : '#7c3aed'; c.beginPath(); c.ellipse(x, y-12, 12, 6, 0, 0, 7); c.fill();
+  c.fillStyle = '#ffffff22'; c.beginPath(); c.ellipse(x-3, y-13, 6, 2.5, 0, 0, 7); c.fill();
+  c.fillStyle = '#e9d5ffaa'; c.font = FONT(700).replace('700','700 8px'); c.textAlign = 'center'; c.textBaseline = 'middle';
+  if (!occupied) c.fillText(s.i+1, x, y-12);
+}
+function drawCounter(c, t){
+  const {gx0,gy0,gx1,gy1,h} = COUNTER;
+  isoBox(c, gx0, gy0, gx1, gy1, h, '#3b2566', '#24163f', '#2d1b4e');
+  c.strokeStyle = '#f0abfc'; c.lineWidth = 2; c.shadowColor = '#f0abfc'; c.shadowBlur = 12;
+  c.beginPath(); c.moveTo(...P(gx1,gy0,h-6)); c.lineTo(...P(gx1,gy1,h-6)); c.lineTo(...P(gx0,gy1,h-6)); c.stroke(); c.shadowBlur = 0;
+  // chữ ORDER trên mặt quầy
+  c.save(); const o = iso(gx1, gy1); c.transform(1, -0.5, 0, 1, o.x, o.y);
+  c.font = FONT(800).replace('800','800 12px'); c.fillStyle = '#f5d0fe'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.shadowColor = '#e879f9'; c.shadowBlur = 10; c.fillText('ORDER HERE', 92, -15); c.shadowBlur = 0; c.restore();
+  // máy pha + máy tính tiền
+  const [mx, my] = P(1.5, 3.4, h);
+  c.fillStyle = '#9ca3af'; rr(c, mx-12, my-26, 24, 26, 4); c.fill(); c.fillStyle = '#1f2937'; rr(c, mx-9, my-23, 18, 9, 2); c.fill();
+  c.fillStyle = '#22c55e'; c.beginPath(); c.arc(mx+5, my-6, 2, 0, 7); c.fill();
+  const [rx2, ry2] = P(1.6, 7.4, h);
+  c.fillStyle = '#1f1436'; rr(c, rx2-11, ry2-14, 22, 14, 3); c.fill(); c.fillStyle = '#67e8f9'; rr(c, rx2-8, ry2-12, 16, 6, 2); c.fill();
+  // ly đang pha
+  if (counterServe && byT[counterServe.t]){
+    const s = byT[counterServe.t], el = t - counterServe.start;
+    const [cx, cy] = P(1.75, ORDER.gy, h);
+    const pop = Math.min(1, el/0.35); const ease = 1 - Math.pow(1-pop, 3);
+    drawCup(c, cx, cy-1, cupR(s, 1.2), s, t, {pop: 0.2 + ease*0.8, glow: true, hit: true});
+    if (el < 0.9){
+      for (let k=0;k<6;k++){ const a = k/6*Math.PI*2 + el*3; const d = 8 + el*30; c.fillStyle = k%2 ? '#f0abfc' : '#fde68a'; c.globalAlpha = 1 - el/0.9;
+        c.beginPath(); c.arc(cx + Math.cos(a)*d, cy - 14 + Math.sin(a)*d*0.6, 2, 0, 7); c.fill(); }
+      c.globalAlpha = 1;
+    }
+    c.font = FONT(800).replace('800','800 11px'); c.textAlign = 'center'; c.fillStyle = colOf(s);
+    c.fillText(`${s.t} ${fmt(s.price)}`, cx, cy + 12);
+  }
+}
+function drawBoard(c, t){
+  c.save(); rightWall(c);
+  const u0 = 150, u1 = 486, w0 = -142, w1 = -26;
+  c.fillStyle = '#07040dee'; rr(c, u0, w0, u1-u0, w1-w0, 10); c.fill();
+  c.strokeStyle = '#a855f7'; c.lineWidth = 2; c.shadowColor = '#a855f7'; c.shadowBlur = 14; rr(c, u0, w0, u1-u0, w1-w0, 10); c.stroke(); c.shadowBlur = 0;
+  c.font = FONT(800).replace('800','800 12px'); c.fillStyle = '#f5d0fe'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillText('🔥 TOP 10 MÃ NỔI NHẤT HÔM NAY', (u0+u1)/2, w0 + 12);
+  const maxTop = Math.max(...hotTop.map(s => s.cap));
+  const cw = (u1-u0-16)/5;
+  const o = iso(0, 0);
+  hotTop.forEach((s, i) => {
+    const row = Math.floor(i/5), col = i%5;
+    const cx = u0 + 8 + cw*col + cw/2, base = w0 + 52 + row*52;
+    const r = 6 + 8*Math.sqrt(s.cap/maxTop);
+    drawCup(c, cx, base, r, s, t, {steam: true});
+    c.font = FONT(800).replace('800','800 10px'); c.fillStyle = colOf(s); c.textAlign = 'center';
+    c.fillText(`${i+1}. ${s.t}`, cx, base + 9);
+    c.font = FONT(600).replace('600','600 8.5px'); c.fillText(`${sgn(pct(s))}%`, cx, base + 19);
+    // vùng bấm (đổi toạ độ tường → toạ độ màn hình)
+    const X = u => o.x + u, Y = (u, w) => o.y + 0.5*u + w;
+    hits.push({t: s.t, x0: X(cx - cw/2 + 2), x1: X(cx + cw/2 - 2), y0: Y(cx, base - r*1.6 - 4) - cw*0.25, y1: Y(cx, base + 23) + cw*0.25});
+  });
+  c.restore();
+}
+
+/* ================== DI CHUYỂN ================== */
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const gdist = (a, b) => Math.hypot(a.gx - b.gx, a.gy - b.gy);
+function resolve(p){
+  p.gx = clamp(p.gx, 0.7, GX-0.6); p.gy = clamp(p.gy, 0.7, GY-0.6);
+  if (p.gx < 2.65 && p.gy < 8.65){ const dx = 2.65 - p.gx, dy = 8.65 - p.gy; if (dx < dy) p.gx = 2.65; else p.gy = 8.65; }
+  TABLES.forEach(tb => {
+    const dx = p.gx - tb.gx, dy = p.gy - tb.gy, d = Math.hypot(dx, dy);
+    if (d < 0.95){ if (d < 1e-3){ p.gx += 0.95; } else { p.gx = tb.gx + dx/d*0.95; p.gy = tb.gy + dy/d*0.95; } }
+  });
+}
+function occupiedSeats(){ const m = new Map(); peers.forEach(p => { if (p.seat >= 0) m.set(p.seat, p.name); }); return m; }
+function nearestSeat(){ let best = null, bd = 0.75; SEATS.forEach(s => { const d = gdist(me, s); if (d < bd){ bd = d; best = s; } }); return best; }
+function freeSeatNear(pt){ const occ = occupiedSeats(); return SEATS.filter(s => !occ.has(s.i)).sort((a,b) => gdist(a,pt) - gdist(b,pt))[0] || null; }
+// Người chơi tự đi chỗ khác → rời hàng chờ order
+function goTo(gx, gy){
+  if (me.seat >= 0) standUp();
+  if (me.q && !serving) leaveQueue('Bạn đã rời hàng chờ order');
+  me.tx = gx; me.ty = gy; me.pendingSit = -1; me.stuck = 0;
+}
+// Đi tự động (theo hàng chờ), không hủy hàng
+function walkTo(gx, gy){
+  if (me.seat >= 0) standUp();
+  if (me.tx === gx && me.ty === gy) return;
+  if (Math.hypot(me.gx - gx, me.gy - gy) < 0.05) return;
+  me.tx = gx; me.ty = gy; me.pendingSit = -1; me.stuck = 0;
+}
+function sit(s){
+  const occ = occupiedSeats();
+  if (occ.has(s.i)){
+    const alt = freeSeatNear(s);
+    toast(alt ? `Ghế ${s.i+1} đã có ${occ.get(s.i)} ngồi, mời sang ghế ${alt.i+1}` : 'Hết ghế trống rồi!');
+    if (alt){ goTo(alt.gx, alt.gy); me.pendingSit = alt.i; }
+    return;
+  }
+  me.seat = s.i; me.gx = s.gx; me.gy = s.gy; me.tx = null; me.moving = false;
+  const tb = TABLES[s.ti]; me.dir = (tb.gx - tb.gy) - (s.gx - s.gy) >= 0 ? 1 : -1;
+  refreshMe();
+}
+function standUp(){
+  if (me.seat < 0) return;
+  const s = SEATS[me.seat], tb = TABLES[s.ti];
+  const dx = s.gx - tb.gx, dy = s.gy - tb.gy, d = Math.hypot(dx, dy);
+  me.seat = -1; me.gx = s.gx + dx/d*0.5; me.gy = s.gy + dy/d*0.5; resolve(me); refreshMe();
+}
+const nearCounter = p => Math.hypot(p.gx - ORDER.gx, p.gy - ORDER.gy) < 1.7;
+
+/* ---------- HÀNG CHỜ ORDER ----------
+   Ai order thì ghi thời điểm vào hàng (q) lên presence. Mọi máy sắp xếp theo cùng một quy tắc
+   (q nhỏ trước, hoà thì so mã phiên) nên ai cũng thấy cùng một thứ tự. Người đứng đầu hàng
+   tự được phục vụ; xong thì rời hàng, người sau tự bước lên. */
+function queueSlot(k){
+  if (k < 7)  return {gx: ORDER.gx, gy: ORDER.gy + k};
+  if (k < 21) return {gx: 4.2 + (k-7)*0.8, gy: 12.25};
+  return {gx: 15.2 - (k-21)*0.8, gy: 11.45};
+}
+function queueList(){
+  const L = [];
+  if (me.joined && me.q) L.push({p: me, q: room && room.server ? (myServerQ || 9e15) : me.q, id: myPeer || '~me', isMe: true});
+  peers.forEach((p, id) => { if (p.q) L.push({p, q: p.q, id}); });
+  return L.sort((a,b) => a.q - b.q || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+}
+function myQueueIndex(){ return me.q ? queueList().findIndex(e => e.isMe) : -1; }
+function leaveQueue(msg){ if (!me.q) return; me.q = 0; me.want = null; if (msg) toast(msg); refreshMe(); }
+function order(t){
+  const s = byT[t]; if (!s || !me.joined) return;
+  if (serving){ toast('Nhân viên đang pha ly của bạn, chờ chút nhé'); return; }
+  if (me.q){ me.want = t; toast(`Đổi món: bạn sẽ order ly ${t}`); refreshMe(); return; }
+  if (me.seat >= 0) standUp();
+  me.q = Date.now(); me.want = t;
+  const n = queueList().length;
+  toast(n > 1 ? `Bạn đã vào hàng chờ order ly ${t} (vị trí thứ ${n})` : `Ra quầy order ly ${t}`);
+  refreshMe();
+}
+function startServing(){
+  const t = me.want, s = byT[t]; if (!s) { leaveQueue(); return; }
+  serving = {t, start: now()};
+  barista.say = {lines:[`Có ngay ly ${t} cho ${me.name}!`, `${s.name} · ${fmt(s.price)}`], until: now() + 2.6};
+}
+function updateQueue(){
+  if (!me.joined || !me.q || serving) return;
+  const idx = myQueueIndex(); if (idx < 0) return;
+  const slot = queueSlot(idx);
+  if (Math.hypot(me.gx - slot.gx, me.gy - slot.gy) > 0.08){ walkTo(slot.gx, slot.gy); return; }
+  if (idx === 0 && me.tx == null) startServing();
+}
+function actSit(){
+  if (!me.joined) return;
+  if (me.seat >= 0) return standUp();
+  const s = nearestSeat();
+  if (s) return sit(s);
+  const f = freeSeatNear(me);
+  if (f){ goTo(f.gx, f.gy); me.pendingSit = f.i; toast(`Đi tới ghế ${f.i+1}`); } else toast('Hết ghế trống rồi!');
+}
+function stepToward(p, dt, speed){
+  const dx = p.tx - p.gx, dy = p.ty - p.gy, d = Math.hypot(dx, dy);
+  if (d < speed*dt || d < 0.04){ p.gx = p.tx; p.gy = p.ty; p.tx = null; p.moving = false; return true; }
+  const ox = p.gx, oy = p.gy;
+  p.gx += dx/d*speed*dt; p.gy += dy/d*speed*dt; resolve(p);
+  const moved = Math.hypot(p.gx-ox, p.gy-oy);
+  p.stuck = moved < speed*dt*0.15 ? (p.stuck||0) + dt : 0;
+  if (p.stuck > 0.6){ p.tx = null; p.moving = false; return true; }
+  p.moving = true; p.walk += dt*11;
+  const sx = (dx - dy); if (Math.abs(sx) > 0.05) p.dir = sx > 0 ? 1 : -1;
+  return false;
+}
+function updateMe(dt){
+  if (!me.joined) return;
+  let ux = 0, uy = 0;
+  if (keys.has('arrowleft')||keys.has('a')) ux -= 1;
+  if (keys.has('arrowright')||keys.has('d')) ux += 1;
+  if (keys.has('arrowup')||keys.has('w')) uy -= 1;
+  if (keys.has('arrowdown')||keys.has('s')) uy += 1;
+  if (ux || uy){
+    if (me.seat >= 0) standUp();
+    if (me.q && !serving) leaveQueue('Bạn đã rời hàng chờ order');
+    if (serving){ ux = 0; uy = 0; }
+  }
+  if (ux || uy){
+    me.tx = null; me.pendingSit = -1;
+    let gx = ux/2 + uy, gy = -ux/2 + uy;          // hướng màn hình → hướng lưới
+    const l = Math.hypot(gx, gy), sp = 3.4;
+    me.gx += gx/l*sp*dt; me.gy += gy/l*sp*dt; resolve(me);
+    if (ux) me.dir = ux > 0 ? 1 : -1;
+    me.moving = true; me.walk += dt*11;
+  } else if (me.tx != null){
+    if (stepToward(me, dt, 3.4)){
+      if (me.pendingSit >= 0){ const i = me.pendingSit; me.pendingSit = -1; if (gdist(me, SEATS[i]) < 0.6) sit(SEATS[i]); }
+    }
+  } else me.moving = false;
+  updateQueue();
+  if (serving && now() - serving.start > 1.8){
+    const s = byT[serving.t]; me.carry = serving.t; serving = null; me.q = 0; me.want = null;
+    toast(`Đã nhận ly ${s.t}, bưng đi tìm chỗ ngồi nhé!`); refreshMe();
+    // bước ra khỏi chỗ order để người sau lên
+    me.tx = ORDER.gx + 0.9 + Math.random()*1.4; me.ty = ORDER.gy - 0.7 - Math.random()*1.8; me.stuck = 0;
+  }
+}
+
+/* ================== PHÒNG NHIỀU NGƯỜI ================== */
+let room = null, lastSent = '', lastSentAt = 0;
+const roomPill = document.getElementById('roomPill');
+function setRoom(text, ok){ roomPill.textContent = text; roomPill.className = 'pill' + (ok ? ' ok' : ''); }
+const isHex = v => typeof v === 'string' && /^#[0-9a-fA-F]{6}$/.test(v);
+const num = (v, lo, hi, d) => (typeof v === 'number' && isFinite(v)) ? Math.min(hi, Math.max(lo, v)) : d;
+const EMOTES = ['none','dance','sad','happy','wave','angry'];
+const EMO_ICON = {none:'', dance:'💃', sad:'😢', happy:'😄', wave:'👋', angry:'😠'};
+const validT = v => typeof v === 'string' && byT[v] ? v : null;
+function syncPeers(list){
+  const seen = new Set();
+  lobby.clear();
+  list.forEach(p => {
+    if (p.sameTab){ myPeer = p.peer; mySelf = p.presence || null; myServerQ = (mySelf && mySelf.q) || 0; return; }
+    if (p.kind !== 'viewer') return;
+    const pr = p.presence || {};
+    const ja = num(pr.ja, 0, 1e15, 0);
+    if (pr.j === 1 || pr.wt === 1) lobby.set(p.peer, {j: pr.j === 1, wt: pr.wt === 1, ja});
+    if (pr.j !== 1 || typeof pr.x !== 'number') return;
+    seen.add(p.peer);
+    const gx = num(pr.x/100, 0, GX, DOOR.gx), gy = num(pr.y/100, 0, GY, DOOR.gy);
+    let r = peers.get(p.peer);
+    if (!r){ r = {gx, gy, walk:0, dir:1, moving:false, carry:null, sv:null}; peers.set(p.peer, r); }
+    r.ja = ja;
+    r.name = String(pr.n || 'Khách').replace(/[\u0000-\u001f]/g, '').slice(0,18);
+    r.color = isHex(pr.c) ? pr.c : '#94a3b8';
+    r.tgx = gx; r.tgy = gy;
+    r.seat = Number.isInteger(pr.s) && pr.s >= 0 && pr.s < 30 ? pr.s : -1;
+    const carry = validT(pr.k);
+    if (carry && carry !== r.carry && nearCounter({gx, gy})) barista.say = {lines:[`Ly ${carry} của ${r.name} đây ạ!`, 'Chúc bạn ngon miệng!'], until: now() + 2.2};
+    r.carry = carry;
+    r.e = EMOTES.includes(pr.e) ? pr.e : 'none';
+    r.q = num(pr.q, 0, 1e15, 0);
+    r.want = validT(pr.w);
+    const sv = validT(pr.sv);
+    if (sv && sv !== r.sv) r.svStart = now();
+    r.sv = sv;
+  });
+  [...peers.keys()].forEach(k => { if (!seen.has(k)) peers.delete(k); });
+  // phòng phòng hờ: chỉ giữ 30 người vào sớm nhất
+  if (peers.size > MAX_GUESTS - (me.joined ? 1 : 0)){
+    [...peers.entries()].sort((a,b) => a[1].ja - b[1].ja).slice(MAX_GUESTS - (me.joined ? 1 : 0)).forEach(([k]) => peers.delete(k));
+  }
+  refreshPeople();
+  checkAdmission();
+}
+function pushPresence(){
+  if (!room || !(me.joined || me.waiting)) return;
+  const tm = performance.now();
+  const obj = me.joined
+    ? {j:1, wt:0, ja:me.ja, n:me.name, c:me.color, x:Math.round(me.gx*100), y:Math.round(me.gy*100), s:me.seat, k:me.carry || '', e:me.e,
+       q:me.q || 0, w:me.want || '', sv: serving ? serving.t : ''}
+    : {j:0, wt:1, ja:me.ja, n:me.name, c:me.color};
+  const js = JSON.stringify(obj);
+  if (js === lastSent || tm - lastSentAt < 70) return;
+  lastSent = js; lastSentAt = tm;
+  room.presence(obj).catch(() => {});
+}
+let roomResolved = false;
+/* Phòng chung qua máy chủ Cà phê ABS (WebSocket) — cùng giao diện với phòng của Claude */
+function serverRoom(){
+  let ws = null, myId = '', list = [], connected = false, mine = {};
+  const subsP = [], subsC = [];
+  const send = o => { if (ws && ws.readyState === 1) ws.send(JSON.stringify(o)); };
+  const api = {
+    server: true,
+    presence: async patch => { Object.keys(patch).forEach(k => { if (patch[k] === null) delete mine[k]; else mine[k] = patch[k]; }); send({type:'presence', pr: mine}); },
+    onPeers: f => { subsP.push(f); return () => {}; },
+    onConnection: f => { subsC.push(f); setTimeout(() => f(connected), 0); return () => {}; },
+    peers: () => list, connected: () => connected,
+  };
+  function open(){
+    const u = new URL('ws', location.href); u.protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    ws = new WebSocket(u.href);
+    ws.onopen = () => { connected = true; subsC.forEach(f => f(true)); if (Object.keys(mine).length) send({type:'presence', pr: mine}); };
+    ws.onmessage = e => {
+      let m; try { m = JSON.parse(e.data); } catch(err){ return; }
+      if (m.type === 'hello') myId = m.id;
+      else if (m.type === 'prices') applyServerPrices(m.data);
+      else if (m.type === 'peers' && Array.isArray(m.peers)){
+        list = m.peers.map(p => ({peer: p.id, sameTab: p.id === myId, isMe: p.id === myId, kind: 'viewer', guest: false, by: null, presence: p.pr || {}}));
+        subsP.forEach(f => f({peers: list, joined: [], left: [], updated: []}));
+      }
+    };
+    ws.onclose = () => { if (connected){ connected = false; subsC.forEach(f => f(false)); } mySelf = null; setTimeout(open, 2000); };
+  }
+  open();
+  setInterval(() => send({type:'ping'}), 20000);
+  return api;
+}
+async function connectRoom(){
+  let srv = null;
+  if (/^https?:$/.test(location.protocol)){
+    try { const r = await fetch('api/prices', {cache: 'no-store'}); if (r.ok){ const d = await r.json(); if (d && Array.isArray(d.stocks)) srv = d; } } catch(e){}
+  }
+  if (srv){ applyServerPrices(srv); updateDataBadge(); room = serverRoom(); }
+  else { try { room = window.claude && window.claude.use ? await window.claude.use('room') : null; } catch(e){ room = null; } }
+  roomResolved = true;
+  if (!room){ setRoom('Chế độ một mình', false); checkAdmission(); return; }
+  setRoom('Đang kết nối…', false);
+  room.onConnection(c => setRoom(c ? 'Phòng chung: đã kết nối' : 'Đang kết nối lại…', c), () => { setRoom('Chế độ một mình', false); room = null; checkAdmission(); });
+  room.onPeers(ch => syncPeers(ch.peers), () => { peers.clear(); lobby.clear(); refreshPeople(); });
+}
+
+/* ---------- GIỚI HẠN 30 KHÁCH ----------
+   Người đã trong quán giữ chỗ. Người mới xếp hàng ngoài cửa theo thời điểm bấm "Vào quán";
+   có chỗ trống thì người đứng đầu hàng ngoài cửa tự vào. */
+function checkAdmission(){
+  if (!me.waiting) return;
+  refreshPeople();
+  if (!roomResolved) return;
+  if (!room){ enterRoom(); return; }
+  if (room.server){                                  // máy chủ quyết định ai được vào
+    if (!mySelf || (!mySelf.j && !mySelf.wt)) return;
+    if (mySelf.j === 1){ enterRoom(); return; }
+    $('waitText').innerHTML = `Quán đang đủ <b>${MAX_GUESTS}/${MAX_GUESTS}</b> khách. Bạn đang đứng thứ <b>${mySelf.wp || 1}</b> trong hàng chờ ngoài cửa.<br>Khi có người rời quán, bạn sẽ tự được mời vào.`;
+    $('waitModal').classList.add('show');
+    return;
+  }
+  if (now() - me.waitSince < 1.5) return;          // chờ danh sách người trong phòng về đủ
+  const inRoom = [...lobby.values()].filter(x => x.j).length;
+  const line = [...lobby.entries()].filter(([, x]) => x.wt && !x.j).map(([id, x]) => ({id, ja: x.ja}));
+  line.push({id: myPeer || '~me', ja: me.ja, isMe: true});
+  line.sort((a,b) => a.ja - b.ja || (a.id < b.id ? -1 : 1));
+  const pos = line.findIndex(x => x.isMe), free = MAX_GUESTS - inRoom;
+  if (pos < free) enterRoom();
+  else {
+    $('waitText').innerHTML = `Quán đang đủ <b>${MAX_GUESTS}/${MAX_GUESTS}</b> khách. Bạn đang đứng thứ <b>${pos - free + 1}</b> trong hàng chờ ngoài cửa.<br>Khi có người rời quán, bạn sẽ tự được mời vào.`;
+    $('waitModal').classList.add('show');
+  }
+}
+function enterRoom(){
+  if (me.joined) return;
+  me.waiting = false; me.joined = true;
+  $('waitModal').classList.remove('show');
+  me.gx = DOOR.gx; me.gy = DOOR.gy;
+  me.tx = 3.6; me.ty = 9.4; me.stuck = 0;
+  refreshMe();
+  toast(`Cà phê ABS chào ${me.name}! Gõ mã vào ô Order để xếp hàng gọi ly`);
+  setTimeout(() => $('q').focus(), 500);
+}
+let hiddenTimer = 0, leftWhileHidden = false;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden){
+    clearTimeout(hiddenTimer);
+    hiddenTimer = setTimeout(() => { if (me.q && !serving){ leaveQueue(); leftWhileHidden = true; } }, 10000);
+  } else {
+    clearTimeout(hiddenTimer);
+    if (leftWhileHidden){ leftWhileHidden = false; toast('Bạn đã rời hàng chờ order vì chuyển sang tab khác quá 10 giây'); }
+  }
+});
+
+/* ================== GIAO DIỆN ================== */
+const $ = id => document.getElementById(id);
+const now = () => performance.now()/1000;
+let toastT = 0;
+function toast(msg){ const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 2400); }
+function esc(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function refreshMe(){
+  $('meDot').style.background = me.color;
+  $('meName').textContent = me.name || '—';
+  const qi = myQueueIndex();
+  $('meSeat').textContent = serving ? 'Đang được phục vụ' : qi >= 0 ? `Hàng chờ #${qi+1}` : me.seat >= 0 ? `Ghế ${me.seat+1}` : (nearCounter(me) ? 'Ở quầy order' : 'Đang đi dạo');
+  $('orderText').innerHTML = serving ? `Nhân viên đang pha ly <b>${serving.t}</b> cho bạn…`
+    : qi >= 0 ? `Bạn đang xếp hàng thứ <b>${qi+1}</b> để order ly <b>${me.want}</b>.${qi > 0 ? ` Phía trước còn ${qi} người.` : ''} Tự đi chỗ khác là rời hàng.`
+    : 'Gõ mã vào ô <b>Order</b> phía trên để vào hàng chờ. Đến lượt bạn, nhân viên pha xong thì ly mới xuất hiện để bạn bưng đi.';
+  if (me.carry){
+    const s = byT[me.carry], st = statusOf(s);
+    $('meCarry').innerHTML = `Đang bưng ly <b style="color:${COLORS[st]}">${s.t}</b> · ${fmt(s.price)} <span style="color:${COLORS[st]}">${ARROW[st]} ${sgn(pct(s))}%</span><br><button class="btn" id="btnReturn" style="margin-top:6px;padding:6px 10px">Trả ly</button> <button class="btn" id="btnInfoMine" style="margin-top:6px;padding:6px 10px">Xem TC/Trần/Sàn</button>`;
+    $('btnReturn').onclick = () => { toast(`Đã trả ly ${me.carry}`); me.carry = null; refreshMe(); };
+    $('btnInfoMine').onclick = () => showInfo(me.carry);
+  } else $('meCarry').textContent = 'Tay đang trống. Order một mã để nhận ly.';
+  refreshPeople();
+}
+function refreshPeople(){
+  const list = [];
+  if (me.joined) list.push({name: me.name + ' (bạn)', color: me.color, seat: me.seat, carry: me.carry, e: me.e, isMeRow: true});
+  peers.forEach(p => list.push(p));
+  $('peopleTitle').textContent = `Trong phòng (${list.length})`;
+  const qpos = new Map(queueList().map((e, i) => [e.p, i+1]));
+  $('people').innerHTML = list.map(p => { const qp = qpos.get(p.isMeRow ? me : p); return `<li><span class="dot" style="background:${p.color}"></span>${esc(p.name)} ${EMO_ICON[p.e] || ''}<span class="sub">${qp ? '⏳ hàng #'+qp+' · ' : ''}${p.carry ? '☕ '+p.carry+' · ' : ''}${p.seat >= 0 ? 'Ghế '+(p.seat+1) : 'đang đi'}</span></li>`; }).join('') || '<li class="sub">Chưa có ai</li>';
+  const n = occupiedSeats().size + (me.seat >= 0 ? 1 : 0);
+  $('seatPill').textContent = `Ghế: ${n}/30`;
+  const outside = [...lobby.values()].filter(x => x.wt && !x.j).length + (me.waiting ? 1 : 0);
+  $('guestPill').textContent = `Khách: ${list.length}/${MAX_GUESTS}` + (outside ? ` · ${outside} chờ ngoài cửa` : '');
+}
+function refreshUI(){
+  if (me.carry) refreshMe();
+  if (infoT) renderInfo(infoT);
+  if ($('drop').classList.contains('show')) renderDrop();
+}
+
+/* --- popup TC / Trần / Sàn --- */
+let infoT = null;
+function renderInfo(t){
+  const s = byT[t], st = statusOf(s), ch = s.price - s.ref, c = COLORS[st];
+  $('infoBox').innerHTML = `
+    <div class="top"><span class="tk" style="color:${c}">${s.t}</span><span class="ex">${s.ex}</span><button class="x" id="infoX" aria-label="Đóng">×</button></div>
+    <div class="nm">${esc(s.name)}</div>
+    <div class="big" style="color:${c}">${fmt(s.price)}<small>${ARROW[st]} ${ch>=0?'+':''}${fmt(ch)} (${sgn(pct(s))}%)</small></div>
+    <div class="grid3">
+      <div style="border-color:${COLORS.ref}66"><label style="color:${COLORS.ref}">TC</label><b style="color:${COLORS.ref}">${fmt(s.ref)}</b></div>
+      <div style="border-color:${COLORS.ceil}66"><label style="color:${COLORS.ceil}">Trần</label><b style="color:${COLORS.ceil}">${fmt(s.ceil)}</b></div>
+      <div style="border-color:${COLORS.floor}66"><label style="color:${COLORS.floor}">Sàn</label><b style="color:${COLORS.floor}">${fmt(s.floor)}</b></div>
+    </div>
+    <div class="meta">Biên độ ±${Math.round(BAND[s.ex]*100)}% · Vốn hóa ≈ ${s.cap} nghìn tỷ đ · Giá: nghìn đồng · ${liveReal() ? `Giá ABS lúc ${liveTime()}` : '<span style="color:#fcd34d">dữ liệu mô phỏng</span>'}</div>
+    <button class="btn primary" id="infoOrder" style="width:100%">☕ Order ly ${s.t}</button>`;
+  $('infoX').onclick = closeInfo;
+  $('infoOrder').onclick = () => { closeInfo(); order(s.t); };
+}
+function showInfo(t){ if (!byT[t]) return; infoT = t; renderInfo(t); $('infoModal').classList.add('show'); }
+function closeInfo(){ infoT = null; $('infoModal').classList.remove('show'); }
+$('infoModal').addEventListener('click', e => { if (e.target.id === 'infoModal') closeInfo(); });
+
+/* --- đếm số lần ấn: 1 lần = hành động chính, 3 lần = TC/Trần/Sàn --- */
+const clk = {key:null, n:0, t:0, timer:0};
+function multiClick(key, single, triple){
+  const tm = performance.now();
+  if (clk.key === key && tm - clk.t < 480) clk.n++; else { clk.key = key; clk.n = 1; }
+  clk.t = tm; clearTimeout(clk.timer);
+  if (clk.n >= 3){ clk.n = 0; triple(); return; }
+  if (single) clk.timer = setTimeout(() => { if (clk.n && clk.n < 3){ clk.n = 0; single(); } }, 420);
+}
+
+/* --- ô order / tìm kiếm --- */
+const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase();
+let sel = 0, results = [];
+function renderDrop(){
+  const q = norm($('q').value.trim()), box = $('drop');
+  if (!q){ box.classList.remove('show'); return; }
+  results = stocks.filter(s => norm(s.t).startsWith(q) || norm(s.name).includes(q))
+    .sort((a,b) => (norm(b.t).startsWith(q) - norm(a.t).startsWith(q)) || b.cap - a.cap).slice(0,9);
+  if (!results.length){ box.innerHTML = '<div class="tip" style="border:none;margin:0">Quán chưa có mã này trong thực đơn.</div>'; box.classList.add('show'); return; }
+  sel = Math.min(sel, results.length-1);
+  box.innerHTML = results.map((s,i) => { const c = colOf(s); return `<div class="res${i===sel?' active':''}" data-t="${s.t}"><span class="mug" style="--c:${c}"></span><b style="color:${c}">${s.t}</b><span class="nm">${esc(s.name)} · ${s.ex}</span><span class="px" style="color:${c}">${fmt(s.price)} ${sgn(pct(s))}%</span></div>`; }).join('')
+    + '<div class="tip">Ấn 1 lần: order ly này (ly xuất hiện ở quầy) · Ấn 3 lần: xem TC / Trần / Sàn</div>';
+  box.classList.add('show');
+}
+function closeDrop(){ $('drop').classList.remove('show'); }
+$('q').addEventListener('input', () => { sel = 0; renderDrop(); });
+$('q').addEventListener('focus', renderDrop);
+$('q').addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown'){ sel = Math.min(sel+1, results.length-1); renderDrop(); e.preventDefault(); }
+  else if (e.key === 'ArrowUp'){ sel = Math.max(sel-1, 0); renderDrop(); e.preventDefault(); }
+  else if (e.key === 'Enter' && results[sel]){ const t = results[sel].t; closeDrop(); $('q').blur(); $('q').value = ''; order(t); }
+  else if (e.key === 'Escape'){ closeDrop(); $('q').blur(); }
+});
+$('drop').addEventListener('mousedown', e => e.preventDefault());
+$('drop').addEventListener('click', e => {
+  const el = e.target.closest('.res'); if (!el) return;
+  const t = el.dataset.t;
+  multiClick('res:' + t, () => { closeDrop(); $('q').blur(); $('q').value = ''; order(t); }, () => { closeDrop(); $('q').blur(); showInfo(t); });
+});
+document.addEventListener('click', e => { if (!e.target.closest('.search')) closeDrop(); });
+$('btnOrderFocus').onclick = () => { $('q').focus(); };
+$('btnCounter').onclick = () => { $('q').focus(); toast(me.q ? 'Bạn đang trong hàng chờ order' : 'Gõ mã để vào hàng chờ order'); };
+$('btnSit').onclick = actSit;
+
+/* --- biểu cảm --- */
+function setEmote(e){ me.e = e; syncEmoteBar(); refreshPeople(); }
+function syncEmoteBar(){ document.querySelectorAll('#bar [data-e]').forEach(b => b.classList.toggle('on', b.dataset.e === me.e)); }
+$('bar').addEventListener('click', e => { const b = e.target.closest('[data-e]'); if (b) setEmote(b.dataset.e); });
+
+/* --- chuột / chạm --- */
+function hitAt(v){ for (let i = hits.length-1; i >= 0; i--){ const h = hits[i]; if (v.x >= h.x0 && v.x <= h.x1 && v.y >= h.y0 && v.y <= h.y1) return h; } return null; }
+function seatAt(v){ return SEATS.find(s => { const [x, y] = P(s.gx, s.gy); return Math.abs(v.x - x) < 14 && v.y > y - 22 && v.y < y + 6; }); }
+function counterAt(v){ const g = unIso(v.x, v.y + 20); return g.gx < 2.6 && g.gy > 2.4 && g.gy < 8.8; }
+cv.addEventListener('pointermove', e => {
+  const v = toV(e.clientX, e.clientY);
+  cv.style.cursor = hitAt(v) || seatAt(v) || counterAt(v) ? 'pointer' : 'default';
+});
+cv.addEventListener('pointerdown', e => {
+  const v = toV(e.clientX, e.clientY);
+  const h = hitAt(v);
+  if (h){ multiClick('cup:' + h.t, null, () => showInfo(h.t)); return; }
+  clk.key = null;
+  if (!me.joined) return;
+  const s = seatAt(v);
+  if (s){ if (me.seat !== s.i){ goTo(s.gx, s.gy); me.pendingSit = s.i; } return; }
+  if (counterAt(v)){ $('q').focus(); if (!me.q) toast('Gõ mã để vào hàng chờ order'); return; }
+  const g = unIso(v.x, v.y);
+  if (g.gx < -0.5 || g.gy < -0.5 || g.gx > GX+0.5 || g.gy > GY+0.5) return;
+  goTo(clamp(g.gx, 0.7, GX-0.6), clamp(g.gy, 0.7, GY-0.6));
+});
+window.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'Escape'){ closeInfo(); return; }
+  const k = e.key.toLowerCase();
+  if (['arrowleft','arrowright','arrowup','arrowdown','w','a','s','d'].includes(k)){ keys.add(k); e.preventDefault(); }
+  if (k === 'f') actSit();
+  if (k === '/' || k === 'enter'){ $('q').focus(); e.preventDefault(); }
+  if (/^[1-6]$/.test(k)) setEmote(EMOTES[+k - 1]);
+});
+window.addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
+window.addEventListener('blur', () => keys.clear());
+
+/* --- vào quán --- */
+(function setupJoin(){
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem('stockcafe2') || '{}'); } catch(e){}
+  $('nameIn').value = saved.n || ('Khách ' + (100 + Math.floor(Math.random()*900)));
+  if (isHex(saved.c)) me.color = saved.c;
+  const sw = $('swatches');
+  sw.innerHTML = SWATCH.map(c => `<button style="background:${c}" data-c="${c}" class="${c===me.color?'sel':''}" aria-label="Màu ${c}"></button>`).join('');
+  sw.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; me.color = b.dataset.c; sw.querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); });
+  const join = () => {
+    me.name = $('nameIn').value.trim().slice(0,18) || 'Khách';
+    try { localStorage.setItem('stockcafe2', JSON.stringify({n:me.name, c:me.color})); } catch(e){}
+    $('joinModal').classList.remove('show');
+    me.ja = Date.now(); me.waiting = true; me.waitSince = now();
+    checkAdmission();
+  };
+  setInterval(checkAdmission, 500);
+  $('joinBtn').onclick = join;
+  $('nameIn').addEventListener('keydown', e => { if (e.key === 'Enter') join(); });
+})();
+
+/* ================== VÒNG LẶP ================== */
+let last = performance.now(), lastMeTxt = '';
+function frame(ts){
+  const dt = Math.min(0.05, (ts - last)/1000); last = ts;
+  const t = ts/1000;
+  updateMe(dt);
+  peers.forEach(p => {
+    const dx = p.tgx - p.gx, dy = p.tgy - p.gy, d = Math.hypot(dx, dy);
+    if (d > 0.01){ const k = Math.min(1, dt*10); p.gx += dx*k; p.gy += dy*k; p.moving = p.seat < 0 && d > 0.03; p.walk += dt*11; const sx = dx - dy; if (Math.abs(sx) > 0.01) p.dir = sx > 0 ? 1 : -1; }
+    else p.moving = false;
+  });
+  // nhân viên chào người đang ở quầy
+  // ly đang hiện trên quầy: của mình, hoặc của người đang được phục vụ
+  counterServe = serving ? serving : null;
+  if (!counterServe) peers.forEach(p => { if (!counterServe && p.sv) counterServe = {t: p.sv, start: p.svStart || t, who: p.name}; });
+  // nhân viên chào người đứng đầu hàng chờ (hoặc người đang đứng ở quầy)
+  const Q = queueList();
+  let greetSay = null, greeting = false;
+  if (!(barista.say && barista.say.until > t)){
+    if (counterServe && counterServe.who){
+      greetSay = {lines: [`Có ngay ly ${counterServe.t} cho ${counterServe.who}!`], until: t + 1};
+    } else if (Q.length){
+      const f = Q[0].p, lines = [`Xin chào ${f.name}!`];
+      lines.push(f.want ? `Mời bạn lên order ly ${f.want} ạ` : 'Mời bạn lên order ạ');
+      if (Q.length > 1) lines.push(`Còn ${Q.length-1} bạn đang xếp hàng, chờ chút nhé!`);
+      greetSay = {lines, until: t + 1}; greeting = true;
+    } else {
+      const near = [];
+      if (me.joined && nearCounter(me) && me.seat < 0) near.push(me.name);
+      peers.forEach(p => { if (p.seat < 0 && nearCounter(p)) near.push(p.name); });
+      if (near.length){ greetSay = {lines: [`Xin chào ${near.slice(0,3).join(', ')}${near.length > 3 ? '…' : ''}!`, 'Bạn muốn order mã gì ạ?'], until: t + 1}; greeting = true; }
+    }
+  }
+  const qpos = new Map(Q.map((e, i) => [e.p, i+1]));
+  const meTxt = me.seat + '|' + nearCounter(me) + '|' + (qpos.get(me) || 0) + '|' + Q.length + '|' + !!serving;
+  if (meTxt !== lastMeTxt){ lastMeTxt = meTxt; refreshMe(); }
+  pushPresence();
+
+  // vẽ
+  hits = [];
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.setTransform(view.s*view.dpr, 0, 0, view.s*view.dpr, view.ox*view.dpr, view.oy*view.dpr);
+  if (bg) ctx.drawImage(bg, 0, 0, VW, VH);
+  drawBoard(ctx, t);
+  const bShow = Object.assign({}, barista, {say: greetSay || barista.say});
+  drawChar(ctx, bShow, t, {role:'staff', greet: greeting});
+  drawCounter(ctx, t);
+
+  const occ = occupiedSeats(); if (me.seat >= 0) occ.set(me.seat, me.name);
+  const items = [];
+  TABLES.forEach(tb => items.push({d: tb.gx + tb.gy, f: () => drawTable(ctx, tb)}));
+  SEATS.forEach(s => items.push({d: s.gx + s.gy - 0.02, f: () => drawSeat(ctx, s, occ.has(s.i))}));
+  const people = [];
+  peers.forEach(p => people.push([p, {qpos: qpos.get(p)}]));
+  if (me.joined){
+    let hint = '';
+    if (me.seat < 0){
+      if (me.q) hint = serving ? 'Đang pha ly của bạn…' : (qpos.get(me) === 1 ? 'Tới lượt bạn!' : 'Đang xếp hàng, tự đi chỗ khác là rời hàng');
+      else if (nearCounter(me) && !serving) hint = 'Gõ mã vào ô Order để xếp hàng';
+      else { const s = nearestSeat(); if (s && !occ.has(s.i)) hint = `F: ngồi ghế ${s.i+1}`; }
+    }
+    people.push([me, {isMe: true, hint, qpos: qpos.get(me)}]);
+  }
+  people.forEach(([p, o]) => {
+    const seated = p.seat >= 0 && SEATS[p.seat];
+    items.push({d: p.gx + p.gy + (seated ? -0.01 : 0), f: () => drawChar(ctx, seated && p.carry ? Object.assign({}, p, {carry: null}) : p, t, o)});
+    if (seated && p.carry && byT[p.carry]){
+      const tb = TABLES[seated.ti], cgx = seated.gx + (tb.gx - seated.gx)*0.5, cgy = seated.gy + (tb.gy - seated.gy)*0.5;
+      const [x, y] = P(cgx, cgy, 26), s = byT[p.carry];
+      items.push({d: tb.gx + tb.gy + 0.05, f: () => {
+        drawCup(ctx, x, y, cupR(s, 0.8), s, t, {hit: true});
+        ctx.font = FONT(800).replace('800','800 9.5px'); ctx.textAlign = 'center'; ctx.fillStyle = colOf(s);
+        ctx.fillText(`${s.t} ${fmt(s.price)}`, x, y + 8);
+      }});
+    }
+  });
+  items.sort((a,b) => a.d - b.d).forEach(i => i.f());
+  requestAnimationFrame(frame);
+}
+
+new ResizeObserver(resize).observe(stage);
+resize(); refreshUI(); refreshMe();
+setInterval(tickPrices, 500);
+connectRoom();
+requestAnimationFrame(frame);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+})();
+</script>
+</body>
+</html>
